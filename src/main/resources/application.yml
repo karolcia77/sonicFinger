@@ -1,0 +1,33 @@
+##开发环境
+server:
+  port: 8080
+  address: 0.0.0.0
+  servlet:
+    context-path: /finger
+spring:
+  # 多个springboot项目部署,需加
+  jmx:
+    enabled: false
+  #jpa配置
+  jpa:
+    database: mysql
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+  tomcat:
+    uri-encoding: UTF-8
+  datasource:
+    ## 118.143.2.7 -> sonicFinger
+    url: jdbc:mysql://118.143.2.7:3306/sonicFinger?characterEncoding=UTF-8&serverTimezone=UTC
+    username: root
+    password: sonic@xunyu
+    driver-class-name: com.mysql.jdbc.Driver
+  mvc:
+    static-path-pattern: /**
+  thymeleaf:
+    cache: false
+mybatis:
+  mapper-locations: classpath:mapping/*Mapper.xml
+  type-aliases-package: com.example.finger.bean
+  configuration:
+    map-underscore-to-camel-case: true

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Sonic</title>
+    <!-- Meta tag Keywords -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="" />
+    <link rel="icon" type="image/x-icon" th:href="@{/img/sion1.png}"/>
+
+    <!-- css files -->
+    <link th:href="@{/css/assets/bootstrap.min.css}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/fingerIndex.css}" type="text/css" media="all" /> <!-- Style-CSS -->
+    <script th:src="@{/js/assets/jquery.js}"></script>
+    <script th:src="@{/js/assets/angular.js}"></script>
+    <script th:src="@{/js/fingerIndex.js}"></script>
+    <script th:inline="javascript">
+        var ctx = [[@{/}]];
+    </script>
+    <!-- online-fonts -->
+    <link href="http://fonts.googleapis.com/css?family=Oleo+Script:400,700&amp;subset=latin-ext" rel="stylesheet">
+    <link href="http://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&amp;subset=cyrillic,cyrillic-ext,greek,greek-ext,latin-ext,vietnamese" rel="stylesheet">
+    <!-- //online-fonts -->
+
+</head>
+<body style="background: #478bca;" ng-app="myapp" ng-controller="fingerIndexController">
+
+<!-- Team -->
+<div class="w3ls-team" id="team" style="padding: 2em 0">
+    <div class="container">
+        <h3 class="title-agile">Our Team</h3>
+        <label class="agile-se"></label>
+        <div class="row team-row">
+            <div class="col-md-3 team-grids" ng-repeat="f in fingerUsers">
+                <div class="thumbnail team-w3agile">
+                    <img th:src="@{/img/t1.jpg}" class="img-responsive" alt="">
+                    <div class="caption">
+                        <h4>{{f.name}}</h4>
+                        <p>{{f.fs_title}}</p>
+                    </div>
+                    <div class="social-icons team-icons right-w3l fotw33">
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+</div>
+<!-- //Team -->
+
+</body>
+</html>
