@@ -38,15 +38,18 @@ myapp.controller("fingerJobsController",["$scope","$http","$location",function (
         }
     }
 
-    // 跟单
+    // 派单
     $scope.fl = {}
     $scope.alertSet = function(id,name){
-        $('#myModal').modal()
         $scope.fl = {}
         $scope.fl.fId = id;
         $scope.fl.f_name = name;
+        $("#ladate1").val("")
+        $("#ladate2").val("")
+        $('#myModal').modal()
     }
 
+    // 保存
     $scope.submitFingerLog = function () {
         var index =  layer.load(0, {shade: false});
         if(!lock1) {
@@ -65,10 +68,10 @@ myapp.controller("fingerJobsController",["$scope","$http","$location",function (
                 $http({
                     method : 'post',
                     url : ctx + "appJson/admin/addFingerLog",
-                    data : $scope.fl
+                    data : JSON.stringify($scope.fl)
                 }).success(function (data) {
                     lock1 = false;
-                    layer.alert( '派单成功', {
+                    layer.alert( '保存成功', {
                         title:'提示',
                         skin: 'layui-layer-lan'
                         ,closeBtn: 0
@@ -90,7 +93,6 @@ myapp.controller("fingerJobsController",["$scope","$http","$location",function (
         elem: '#ladate2'
         ,type: 'datetime'
     });
-
 
     // 退出
     $scope.goCancel = function(url){

@@ -1,5 +1,7 @@
 package com.example.finger.dao;
 
+import com.example.finger.bean.FingerCase;
+import com.example.finger.bean.FingerCaseRelation;
 import com.example.finger.bean.FingerUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -19,6 +21,9 @@ public interface FingerUserDao extends JpaRepository<FingerUser,Long> {
     @Query("select new FingerUser(f.id,f.name,f.status,f.updateDate) from FingerUser f")
     List<FingerUser> getAll();
 
+    @Query("select new FingerUser(f.id,f.fingerTxt) from FingerUser f where f.status = 1")
+    List<FingerUser> getAllfpComparison();
+
     @Query("select new FingerUser(f.id,f.name,f.status,f.updateDate) from FingerUser f where f.name like %:search% ")
     List<FingerUser> getSearch(@Param("search")String search);
 
@@ -32,8 +37,13 @@ public interface FingerUserDao extends JpaRepository<FingerUser,Long> {
     /**
      * 以下是jobs
      */
-    @Query("select new FingerUser(f.id,f.name,s.title,f.jobsUpdateDate) from FingerUser f,FingerStatus s where f.fsId = s.id and f.status = 1 order by f.id")
+    @Query("select new FingerUser(f.id,f.name,s.title,f.jobsUpdateDate,c.no) from FingerUser f " +
+            " inner join FingerStatus s on f.fsId = s.id " +
+            " left join FingerCaseRelation r on r.fId = f.id and r.fingerInd = 1"+
+            " left join FingerCase c on c.id = r.fcId "+
+            " where f.status = 1 order by f.id")
     List<FingerUser> getFingerJobsAll();
+
 
     @Modifying
     @Query("update FingerUser f set f.fsId = :fsId , f.jobsUpdateDate = :date where f.id = :fId")

@@ -18,7 +18,8 @@ DROP TABLE IF EXISTS `finger_user`;
 CREATE TABLE `finger_user` (
   `f_id` INT(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
   `f_name` VARCHAR(100) NULL COMMENT '名称',
-  `f_finger` TEXT NULL COMMENT '指纹号',
+  `f_finger` VARCHAR(100) NULL COMMENT '指纹号',
+  `f_finger_txt` TEXT NULL COMMENT '指纹详细',
   `f_status` INT(11) DEFAULT '0' COMMENT '状态（1发布，0未发布）',
   `f_fs_id` INT(11) DEFAULT '1' COMMENT '派单状态',
   `f_createdate` DATETIME COMMENT '创建时间',
@@ -39,17 +40,38 @@ CREATE TABLE `finger_status` (
 INSERT INTO finger_status (fs_title,fs_createdate,fs_updatedate)
 VALUES ('OFF',NOW(),NOW()),('等待',NOW(),NOW()),('派单',NOW(),NOW()),('跟单',NOW(),NOW())
 
--- 派单历史记录
+-- 派单case
+DROP TABLE IF EXISTS `finger_case`;
+CREATE TABLE `finger_case` (
+  `fc_id` INT(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `fc_no` VARCHAR(200) NULL COMMENT '单号',
+  `fc_description` VARCHAR(200) NULL COMMENT '描述',
+  `fc_startdate` DATETIME COMMENT '预计开始时间',
+  `fc_enddate` DATETIME COMMENT '预计结束时间',
+  `fc_createdate` DATETIME COMMENT '创建时间',
+  `fc_status` INT(11) NULL DEFAULT 0 COMMENT '状态（2待做,1完成，0未完成,-1无）',
+  PRIMARY KEY (`fc_id`)
+)ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+-- 派单关系表
+DROP TABLE IF EXISTS `finger_case_relation`;
+CREATE TABLE `finger_case_relation` (
+  `fcr_id` INT(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `fcr_fc_id` INT(11) NULL COMMENT '单ID',
+  `fcr_f_id` INT(11) NOT NULL COMMENT '人ID',
+  `fcr_ind` INT(11) DEFAULT 0 COMMENT '单状态:0不做,1正在做',
+  `fcr_finger_ind` INT(11) DEFAULT 0 COMMENT '指纹登记状态:0未登记,1已登记',
+  `fcr_createdate` DATETIME COMMENT '创建时间',
+  PRIMARY KEY (`fcr_id`)
+)ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+-- 派单日志记录
 DROP TABLE IF EXISTS `finger_log`;
 CREATE TABLE `finger_log` (
   `fl_id` INT(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
-  `fl_f_id` INT(11) DEFAULT '0' COMMENT '人ID',
-  `fl_fs_id` INT(11) DEFAULT '0' COMMENT '派单状态ID',
-  `fl_no` VARCHAR(200) NULL COMMENT '单号',
-  `fl_description` VARCHAR(200) NULL COMMENT '描述',
-  `fl_startdate` DATETIME COMMENT '预计开始时间',
-  `fl_enddate` DATETIME COMMENT '预计结束时间',
+  `fl_fc_id` INT(11) NULL COMMENT '单ID',
+  `fl_f_id` INT(11) NOT NULL COMMENT '人ID',
+  `fl_fs_id` INT(11) DEFAULT 0 COMMENT '派单状态',
   `fl_createdate` DATETIME COMMENT '创建时间',
-  `fl_status` INT(11) NULL COMMENT '状态（2待做,1完成，0未完成）',
   PRIMARY KEY (`fl_id`)
 )ENGINE=INNODB DEFAULT CHARSET=utf8;

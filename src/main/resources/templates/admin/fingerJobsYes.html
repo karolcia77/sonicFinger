@@ -17,7 +17,7 @@
     <script th:src="@{/js/laydate/laydate.js}"></script>
     <script th:src="@{/js/assets/angular.js}"></script>
     <script th:src="@{/js/admin/directive.js}"></script>
-    <script th:src="@{/js/admin/fingerJobs.js}"></script>
+    <script th:src="@{/js/admin/fingerJobsLog.js}"></script>
     <script th:src="@{/js/common.js}"></script>
     <!--<base th:href="@{/appPage/admin/forms}">-->
     <script th:inline="javascript">
@@ -39,7 +39,7 @@
     <![endif]-->
 
 </head>
-<body cz-shortcut-listen="true" ng-app="myapp" ng-controller="fingerJobsController">
+<body cz-shortcut-listen="true" ng-app="myapp" ng-controller="fingerJobsYesController">
 <div id="wrapper">
     <left-Directive></left-Directive>
     <div id="page-wrapper">
@@ -48,15 +48,9 @@
             <div class="col-lg-12">
                 <div class="row" style="margin: 30px 0 20px;padding-bottom: 9px;border-bottom: 1px solid #eee;">
                     <div class="col-lg-2">
-                        <span style="font-size: 36px;">派单管理</span>
+                        <span style="font-size: 36px;">已派单</span>
                     </div>
                 </div>
-                <!-- button -->
-                <div class="row">
-                    <div class="col-lg-12" style="text-align: right;">
-                        <button class="btn btn-default" type="button" ng-click="alertSet(0)">Add Case</button>
-                    </div>
-                </div><!-- /.row -->
 
                 <!-- 数据显示-->
                 <div class="table-responsive">
@@ -65,21 +59,36 @@
                         <tr>
                             <th></th>
                             <th>名称</th>
-                            <th>更新时间</th>
-                            <th>跟单状态</th>
+                            <th>单号</th>
+                            <th class="col-lg-4">详细</th>
+                            <th>创建时间</th>
+                            <th>指纹跟单状态</th>
+                            <th>Case状态</th>
                             <th></th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr ng-repeat="f in fingerUsers">
+                        <tr ng-repeat="f in myLogs">
                             <td>{{$index+1}}</td>
                             <td>{{f.name}}</td>
-                            <td>{{f.jobsUpdateDate.substring(0,16)}}</td>
-                            <td>{{f.fs_title}}</td>
+                            <td>{{f.no}}</td>
+                            <td>{{f.description}}</td>
+                            <td>{{f.createDate.substring(0,16)}}</td>
+                            <td>
+                                <div ng-if="f.status != 1">
+                                    <div ng-if="f.fingerInd == 0">未</div>
+                                    <div ng-if="f.fingerInd == 1">已登记</div>
+                                </div>
+                                <div ng-if="f.status == 1">已登记</div>
+                            </td>
+                            <td>
+                                <div ng-if="f.status == 0">未完成</div>
+                                <div ng-if="f.status == 1">完成</div>
+                                <div ng-if="f.status == 2">待做</div>
+                            </td>
+
                             <td style="text-align: right;">
-                                <button class="btn btn-default" type="button" ng-click="jobsEditStatus(f.id,1)">OFF</button>
-                                <button class="btn btn-default" type="button" ng-click="jobsEditStatus(f.id,2)" >等待</button>
-                                <button class="btn btn-default" type="button" ng-click="alertSet(f.id,f.name)" >派单</button>
+                                <button class="btn btn-default" type="button" ng-click="getDelete(f.id)">查看</button>
                             </td>
                         </tr>
 
@@ -93,18 +102,13 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title" id="myModalLabel">
-                                    <element ng-if="fl.fId > 0">派单</element>
-                                    <element ng-if="fl.fId == 0">Add Case</element>
-                                </h4>
+                                <h4 class="modal-title" id="myModalLabel">派单</h4>
                             </div>
                             <div class="modal-body">
-                                <element ng-if="fl.fId > 0">
-                                    <div class="form-group">
-                                        <label for="txt_name">名称</label>
-                                        <input type="text" name="txt_name" ng-model="fl.f_name" readonly="readonly" class="form-control" id="txt_name">
-                                    </div>
-                                </element>
+                                <div class="form-group">
+                                    <label for="txt_name">名称</label>
+                                    <input type="text" name="txt_name" ng-model="fl.f_name" readonly="readonly" class="form-control" id="txt_name">
+                                </div>
                                 <div class="form-group">
                                     <label for="txt_no">单号</label>
                                     <input type="text" name="txt_no" ng-model="fl.no" class="form-control" id="txt_no" placeholder="单号">

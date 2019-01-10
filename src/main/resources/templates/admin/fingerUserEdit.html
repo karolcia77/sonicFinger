@@ -19,6 +19,15 @@
     <script th:src="@{/js/admin/fingerUser.js}"></script>
     <script th:src="@{/js/common.js}"></script>
     <!--<base th:href="@{/appPage/admin/forms}">-->
+    <!-- 指纹-->
+    <link rel="stylesheet" th:href="@{/css/sample/box.css}" type="text/css">
+    <script type="text/javascript" th:src="@{/js/sample/main.js}"></script>
+    <script type="text/javascript" th:src="@{/js/sample/fingerprint.js}"></script>
+    <script type="text/javascript" th:src="@{/js/sample/jquery.js}"></script>
+    <script type="text/javascript" th:src="@{/js/sample/baseMoth.js}"></script>
+    <script type="text/javascript" th:src="@{/js/sample/dhtmlxCommon.js}"></script>
+
+
     <script th:inline="javascript">
         var ctx = [[@{/}]];
     </script>
@@ -48,8 +57,7 @@
             <div class="col-lg-12">
                 <h1 class="page-header">用户管理<span style="font-size: 28px;color: #999;">{{editType}}</span></h1>
 
-                <div class="row">
-                    <form class="form-horizontal" ng-submit="submitUpdate()" autocomplete="off">
+                <form class="form-horizontal" autocomplete="off">
                         <div class="form-group">
                             <label for="inputTitle" class="col-sm-2 control-label">名称 :</label>
                             <div class="col-sm-3">
@@ -57,21 +65,66 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="inputProblem" class="col-sm-2 control-label">指纹状态 :</label>
+                            <label for="fingerId" class="col-sm-2 control-label">指纹值 :</label>
                             <div class="col-sm-3">
-                                <input type="text" class="form-control" id="inputProblem" ng-model="user.finger">
+                                <input type="text" class="form-control" readonly id="fingerId" ng-model="user.finger">
+                                <input type="hidden" class="form-control" id="fingerTemplate10" ng-model="user.fingerTxt">
+                            </div>
+                            <!-- 指纹-->
+                            <div style="margin-top: 6px;" class="">
+                                <form method="post" id="fpVerifyForm" name="fpVerifyForm"
+                                      action="authLoginAction!login.do?fpLogin=fpLogin"
+                                      enctype="multipart/form-data" style="display: none">
+                                    <input type="hidden" id="verifyModel" name="verifyModel" /> <input
+                                        type="hidden" id="verifyTemplate" name="verifyTemplate" />
+                                </form>
+                                <div id="fpRegisterDiv" style="display: inline;">
+                                    <a id="fpRegister"
+                                       onclick='submitRegister("指纹", "指纹数:", "确认保存当前修改吗？", "驱动下载", false)'
+                                       title="请安装指纹驱动或启动该服务" class="showGray"
+                                       onmouseover="this.className='showGray'">注册</a>
+                                </div>
+                                <div id="driverDownload" style="display: inline; margin: 0 0 0 5px;">
+                                    <a id='downloadDriver' href='middleware/zkbioonline.exe'
+                                       title='驱动下载'>驱动下载</a>
+                                </div>
+                                <div id="bg" style="display: none;"></div>
+                                <div id="box" class="box" style="display: none;">
+                                    <h2>指纹登记</h2>
+                                    <div class="list">
+                                        <canvas id="canvas" width="430" height="450"
+                                                style="background: rgb(243, 245, 240)"></canvas>
+                                        <input type="hidden" id="whetherModify" name="whetherModify" alt=""
+                                               value="111" />
+
+                                        <div style="position: absolute; left: 310px; top: 325px; width: 70px; height: 28px;">
+                                            <button type="button" id="submitButtonId" name="makeSureName"
+                                                    onclick="submitEvent()" class="button-form">确定</button>
+                                            <!-- ${common_edit_ok}:确定 -->
+                                        </div>
+                                        <div style="position: absolute; left: 310px; top: 365px; width: 70px; height: 28px;">
+                                            <button class="button-form" type="button" id="closeButton"
+                                                    name="closeButton" onclick='cancelEvent("确认保存当前修改吗?", "指纹数:");'>
+                                                取消</button>
+                                            <!-- ${common_edit_cancel}:取消 -->
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
-                                <button style="width: 70px;" type="submit" class="btn btn-default">Ok</button>
+                                <button style="width: 70px;" ng-click="submitUpdate()" class="btn btn-default">Ok</button>
                                 <button style="width: 70px;" onclick="goBack();" type="button" class="btn btn-default">Cancel</button>
                             </div>
                         </div>
-                    </form>
-                </div>
+                </form>
             </div>
         </div>
+
+
+
     </div>
 </div>
 

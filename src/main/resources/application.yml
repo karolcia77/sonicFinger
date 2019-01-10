@@ -18,7 +18,7 @@ spring:
     uri-encoding: UTF-8
   datasource:
     ## 118.143.2.7 -> sonicFinger
-    url: jdbc:mysql://118.143.2.7:3306/sonicFinger?characterEncoding=UTF-8&serverTimezone=UTC
+    url: jdbc:mysql://118.143.2.7:3306/sonicFinger?characterEncoding=UTF-8&serverTimezone=Hongkong
     username: root
     password: sonic@xunyu
     driver-class-name: com.mysql.jdbc.Driver

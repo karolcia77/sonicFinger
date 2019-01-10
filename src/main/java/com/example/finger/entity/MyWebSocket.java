@@ -1,6 +1,5 @@
 package com.example.finger.entity;
 
-import com.example.finger.bean.FingerUser;
 import org.springframework.stereotype.Component;
 
 import javax.websocket.OnClose;

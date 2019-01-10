@@ -238,6 +238,11 @@ myapp.controller("fingerUserEditController",["$scope","$http","$location",functi
     }
     $scope.info1();
 
+    // 启动指纹
+    myfunction();
+
+
+
     // update提交
     var lock1 = false; //默认未锁定
     $scope.submitUpdate = function () {
@@ -248,6 +253,8 @@ myapp.controller("fingerUserEditController",["$scope","$http","$location",functi
         if(!lock1) {
             var index =  layer.load(0, {shade: false});
             lock1 = true; // 锁定
+            $scope.user.finger = $("#fingerId").val();
+            $scope.user.fingerTxt = $("#fingerTemplate10").val();
             $http({
                 method : 'post',
                 url : ctx + 'appJson/admin/fingerUserUpdate',

@@ -9,13 +9,6 @@ myapp.config(['$locationProvider', function($locationProvider) {
 }]);
 // 左导航  <left-Directive></left-Directive>
 myapp.directive('leftDirective', function() {
-  /*  var templateHtml = " <div class=\"col-sm-3 col-md-2 sidebar\">" +
-        "                <ul class=\"nav nav-sidebar\">\n" +
-        "                <li class=\"fingerUserPage\"><a href=\"javascript:void(0);\" ng-click=\"goCancel('" + ctx + "appPage/admin/fingerUser')\">用户管理</a></li>\n" +
-        "                <li class=\"fingerJobsPage\"><a href=\"javascript:void(0);\" ng-click=\"goCancel('" + ctx + "appPage/admin/fingerJobs')\">派单管理</a></li>\n" +
-        "                <li class=\"fingerJobsLogsPage\"><a href=\"javascript:void(0);\" ng-click=\"goCancel('" + ctx + "appPage/admin/fingerJobsLogs')\">派单历史</a></li>\n" +
-
-        "            </ul></div>";*/
     var templateHtml = "<nav class=\"navbar navbar-default navbar-static-top\" role=\"navigation\" style=\"margin-bottom: 0\">\n" +
         "            <div class=\"navbar-header\">\n" +
         "                <button type=\"button\" class=\"navbar-toggle\" data-toggle=\"collapse\" data-target=\".navbar-collapse\">\n" +
@@ -24,13 +17,13 @@ myapp.directive('leftDirective', function() {
         "                    <span class=\"icon-bar\"></span>\n" +
         "                    <span class=\"icon-bar\"></span>\n" +
         "                </button>\n" +
-        "                <a class=\"navbar-brand\" href=\"index.html\">Sonic派单后台</a>\n" +
+        "                <a class=\"navbar-brand\" href=\"#\">Sonic派单后台</a>\n" +
         "            </div>\n" +
         "            <!-- /.navbar-header -->\n" +
         "            <ul class=\"nav navbar-top-links navbar-right\">\n" +
         "                <!-- /.1 -->\n" +
         "                <li class=\"dropdown\">\n" +
-        "                    <a class=\"dropdown-toggle\" data-toggle=\"dropdown\" href='javascript:void(0);' ng-click=\"goCancel('" + ctx + "appPage/fingerIndex')\">前台\n" +
+        "                    <a class=\"dropdown-toggle\" href='"+ctx+"appPage/fingerIndex' target=\"_blank\">前台\n" +
         "                        <i class=\"fa fa-tasks fa-fw\"></i>\n" +
         "                    </a>\n" +
         "                    <!-- /.dropdown-alerts -->\n" +
@@ -82,19 +75,22 @@ myapp.directive('leftDirective', function() {
         "                <div class=\"sidebar-nav navbar-collapse\">\n" +
         "                    <ul class=\"nav\" id=\"side-menu\">\n" +
         "                        <li>\n" +
-        "                            <a  class=\"fingerUserPage\" href='javascript:void(0);' ng-click=\"goCancel('" + ctx + "appPage/admin/fingerUser')\"><i class=\"fa fa-dashboard fa-fw\"></i> 用户管理</a>\n" +
+        "                            <a class=\"fingerUserPage\" href='javascript:void(0);' ng-click=\"goCancel('" + ctx + "appPage/admin/fingerUser')\"><i class=\"fa fa-dashboard fa-fw\"></i> 用户管理</a>\n" +
         "                        </li>\n" +
         "                        <li>\n" +
         "                            <a class=\"fingerJobsPage\" href='javascript:void(0);' ng-click=\"goCancel('" + ctx + "appPage/admin/fingerJobs')\"><i class=\"fa fa-bar-chart-o fa-fw\"></i> 派单管理</a>\n" +
         "                        </li>\n" +
         "                        <li>\n" +
-        "                            <a href=\"#\"><i class=\"fa fa-sitemap fa-fw\"></i> 派单历史<span class=\"fa arrow\"></span></a>\n" +
-        "                            <ul class=\"nav nav-second-level\">\n" +
+        "                            <a href=\"#\"><i class=\"fa fa-sitemap fa-fw\"></i> 派单数据<span class=\"fa arrow\"></span></a>\n" +
+        "                            <ul id='navbartop3' class=\"nav nav-second-level\">\n" +
         "                                <li>\n" +
-        "                                    <a href=\"flot.html\">Flot Charts</a>\n" +
+        "                                    <a class=\"fingerJobsNoPage\" href='javascript:void(0);' ng-click=\"goCancel('" + ctx + "appPage/admin/fingerJobsNo')\"> &nbsp;&nbsp;&nbsp;&nbsp;未派单</a>\n" +
         "                                </li>\n" +
         "                                <li>\n" +
-        "                                    <a href=\"morris.html\">Morris.js Charts</a>\n" +
+        "                                    <a class=\"fingerJobsYesPage\" href='javascript:void(0);' ng-click=\"goCancel('" + ctx + "appPage/admin/fingerJobsYes')\"> &nbsp;&nbsp;&nbsp;&nbsp;已派单</a>\n" +
+        "                                </li>\n" +
+        "                                <li>\n" +
+        "                                    <a class=\"fingerJobsLogPage\" href='javascript:void(0);' ng-click=\"goCancel('" + ctx + "appPage/admin/fingerJobsLog')\"> &nbsp;&nbsp;&nbsp;&nbsp;历史</a>\n" +
         "                                </li>\n" +
         "                            </ul>\n" +
         "                            <!-- /.nav-second-level -->\n" +

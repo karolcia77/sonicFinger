@@ -24,6 +24,9 @@ public class FingerUser {
     @Column(name = "f_finger")
     private String finger;
 
+    @Column(name = "f_finger_txt")
+    private String fingerTxt;
+
     @Column(name = "f_status",columnDefinition="long default 0")
     private Long status = (long)0;
 
@@ -46,6 +49,9 @@ public class FingerUser {
     @Transient
     private String fs_title;  // fsTitle
 
+    @Transient
+    private String fc_no;  // fc_no
+
     public FingerUser(){}
     public FingerUser(long id,String name,long status,Date updateDate){
         this.id = id;
@@ -59,7 +65,34 @@ public class FingerUser {
         this.fs_title = fs_title;
         this.jobsUpdateDate = jobsUpdateDate;
     }
+    public FingerUser(long id,String name,String fs_title,Date jobsUpdateDate,String no){
+        this.id = id;
+        this.name = name;
+        this.fs_title = fs_title;
+        this.jobsUpdateDate = jobsUpdateDate;
+        this.fc_no = no;
+    }
+    public FingerUser(long id,String fingerTxt){
+        this.id = id;
+        this.fingerTxt = fingerTxt;
+    }
 
+
+    public String getFc_no() {
+        return fc_no;
+    }
+
+    public void setFc_no(String fc_no) {
+        this.fc_no = fc_no;
+    }
+
+    public String getFingerTxt() {
+        return fingerTxt;
+    }
+
+    public void setFingerTxt(String fingerTxt) {
+        this.fingerTxt = fingerTxt;
+    }
 
     public Date getJobsUpdateDate() {
         return jobsUpdateDate;

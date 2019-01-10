@@ -13,13 +13,20 @@ public class UrlController {
 
     @RequestMapping("/")
     public String test(){
-        return "index";
+        return "fingerIndex";
     }
 
     @RequestMapping("/fingerIndex")
     public String fingerIndex(){
         return "fingerIndex";
     }
+
+    @RequestMapping("/fingerSampleIndex")
+    public String fingerSampleIndex(){
+        return "fingerSampleIndex";
+    }
+
+
 
     @RequestMapping("/admin/login")
     public String login(){return "admin/login";}
@@ -39,8 +46,18 @@ public class UrlController {
         return "admin/fingerJobs";
     }
 
-    @RequestMapping("/admin/forms")
-    public String forms(){
-        return "admin/forms";
+    @RequestMapping("/admin/fingerJobsYes")
+    public String fingerJobsYes(){
+        return "admin/fingerJobsYes";
+    }
+
+    @RequestMapping("/admin/fingerJobsNo")
+    public String fingerJobsNo(){
+        return "admin/fingerJobsNo";
+    }
+
+    @RequestMapping("/admin/fingerJobsLog")
+    public String fingerJobsLog(){
+        return "admin/fingerJobsLog";
     }
 }

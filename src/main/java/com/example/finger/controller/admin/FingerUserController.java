@@ -4,6 +4,7 @@ import com.example.finger.bean.FingerUser;
 import com.example.finger.bean.RestResultModule;
 import com.example.finger.bean.User;
 import com.example.finger.dao.FingerUserDao;
+import com.example.finger.entity.MyWebSocket;
 import com.example.finger.service.FingerUserService;
 import com.example.finger.service.UserService;
 import org.slf4j.Logger;
@@ -86,11 +87,13 @@ public class FingerUserController {
     @ResponseBody
     @RequestMapping(value = "/fingerUser/editStatus")
     public void editStatus(@RequestParam(name = "fIds",defaultValue = "",required = true) String fIds,
-                           @RequestParam(name = "status",defaultValue = "0",required = true) long status){
+                           @RequestParam(name = "status",defaultValue = "0",required = true) long status) throws Exception{
         String [] fId = fIds.split("-");
         for (String id : fId) {
             fingerUserService.saveStatus(Long.parseLong(id),status);
         }
+        MyWebSocket webSocket = new MyWebSocket();
+        webSocket.sendInfo("ok");
     }
 
 
