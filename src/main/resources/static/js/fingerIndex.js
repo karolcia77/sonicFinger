@@ -91,57 +91,6 @@ myapp.controller("fingerSampleIndexController",["$scope","$http","$location",fun
         })
     }
 
-    $scope.editfpComparison1 = function(dataArr){
-        var reg = $scope.user.fingerTxt;
-        for (var i=0;i<dataArr.length;i++)
-        {
-            var ver = dataArr[i].fingerTxt.replace("[","").replace("]","");
-            $.ajax( {
-                type : "POST",
-                url : "http://127.0.0.1:22001/ZKBIOOnline/fingerprint/verify",
-                dataType : "json",
-                data:JSON.stringify({'reg':reg ,'ver':  ver}),
-                async: false,
-                success : function(data)
-                {
-                    //返回码
-                    var ret = null;
-                    ret = data.ret;
-                    //接口调用成功返回时
-                    if(ret == 0)
-                    {
-                        console.log("score:" + data.score);
-                        if(data.score > 10){
-                            $scope.editfpComparison2(dataArr[i].id)
-                        }
-                    }
-                    else
-                    {
-                        alert("模板出错,是不是多了指纹ret:" + data.ret);
-                    }
-                },
-                error : function(XMLHttpRequest, textStatus, errorThrown)
-                {
-                    alert("请安装指纹驱动或启动该服务!");
-                }
-            });
-
-        }
-    }
-
-
-    $scope.editfpComparison2 = function(id){
-        $scope.userNew = {}
-        $scope.userNew.id = id;
-        $http({
-            method : 'post',
-            url : ctx + "appJson/admin/fpComparisonaddLog",
-            data : JSON.stringify($scope.userNew),
-        }).success(function (data) {
-
-        })
-    }
-
 
     // 退出
     $scope.goCancel = function(url){

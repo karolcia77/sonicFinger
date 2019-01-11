@@ -76,6 +76,10 @@ public class FingerUser {
         this.id = id;
         this.fingerTxt = fingerTxt;
     }
+    public FingerUser(String name,long id){
+        this.name = name;
+        this.id = id;
+    }
 
 
     public String getFc_no() {

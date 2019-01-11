@@ -50,6 +50,15 @@ public class FingerJobsService {
         fingerCaseRelationDao.save(relation);
     }
 
+    /**
+     * 按人ID修改case关联当做状态: 关
+     * @param fId
+     */
+    @Transactional
+    public void updateCaseRelationInd(long fId){
+        fingerCaseRelationDao.updateCaseRelationInd(fId);
+    }
+
 
     /**
      * 录入指纹 ,操作
@@ -63,13 +72,13 @@ public class FingerJobsService {
         if(null != relation){
             if(relation.getFingerInd() == 0){
                 // 登记
-                // 修改当前case为跟单状态
+                // 修改当前case指纹状态
                 fingerCaseRelationDao.editFingerInd(1,relation.getId());
                 // 修改人跟单状态:跟单
                 fingerUserDao.jobsEditStatus(relation.getfId(),4,d);
             }else{
                 // 结束登记
-                // 修改当前case单状态
+                // 修改当前case指纹状态
                 fingerCaseRelationDao.editFingerInd(0,relation.getId());
                 // 修改当前case,完成状态
                 fingerCaseDao.editStatus(relation.getFcId());

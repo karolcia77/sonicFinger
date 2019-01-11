@@ -13,6 +13,19 @@ CREATE TABLE `user` (
 -- 默认
 INSERT  INTO `user`(`usr_id`,`usr_login_id`,`usr_password`,`usr_role`) VALUES (1,'admin','admin','admin');
 
+-- 派单状态
+DROP TABLE IF EXISTS `finger_status`;
+CREATE TABLE `finger_status` (
+  `fs_id` INT(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `fs_title` VARCHAR(100) NULL COMMENT '名称',
+  `fs_createdate` DATETIME COMMENT '创建时间',
+  `fs_updatedate` DATETIME COMMENT '更新时间',
+  PRIMARY KEY (`fs_id`)
+)ENGINE=INNODB DEFAULT CHARSET=utf8;
+INSERT INTO finger_status (fs_title,fs_createdate,fs_updatedate)
+VALUES ('OFF',NOW(),NOW()),('等待',NOW(),NOW()),('派单',NOW(),NOW()),('跟单',NOW(),NOW())
+
+
 -- 用户表
 DROP TABLE IF EXISTS `finger_user`;
 CREATE TABLE `finger_user` (
@@ -27,18 +40,6 @@ CREATE TABLE `finger_user` (
   `f_jobs_updatedate` DATETIME COMMENT '操作更新时间',
   PRIMARY KEY (`f_id`)
 )ENGINE=INNODB DEFAULT CHARSET=utf8;
-
--- 派单状态
-DROP TABLE IF EXISTS `finger_status`;
-CREATE TABLE `finger_status` (
-  `fs_id` INT(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
-  `fs_title` VARCHAR(100) NULL COMMENT '名称',
-  `fs_createdate` DATETIME COMMENT '创建时间',
-  `fs_updatedate` DATETIME COMMENT '更新时间',
-  PRIMARY KEY (`fs_id`)
-)ENGINE=INNODB DEFAULT CHARSET=utf8;
-INSERT INTO finger_status (fs_title,fs_createdate,fs_updatedate)
-VALUES ('OFF',NOW(),NOW()),('等待',NOW(),NOW()),('派单',NOW(),NOW()),('跟单',NOW(),NOW())
 
 -- 派单case
 DROP TABLE IF EXISTS `finger_case`;

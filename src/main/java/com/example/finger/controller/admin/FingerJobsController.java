@@ -88,6 +88,8 @@ public class FingerJobsController {
                 relation.setfId(fingerCase.getfId());
                 relation.setCreateDate(d);
                 relation.setInd((long)1);  // 值1 是正在做
+                // 更新其他正在操作的
+                fingerJobsService.updateCaseRelationInd(fingerCase.getfId());
                 fingerJobsService.saveFingerCaseRelation(relation);
                 fingerUserDao.jobsEditStatus(fingerCase.getfId(),3,d);
               /* // 添加历史
@@ -106,6 +108,36 @@ public class FingerJobsController {
     }
 
     /**
+     *  派单,人ID,单ID
+     * @param fId
+     * @param fcId
+     */
+    @Transactional
+    @ResponseBody
+    @RequestMapping(value = "/addCaseRelation")
+    public RestResultModule addCaseRelation(@RequestParam(name = "fId",defaultValue = "0",required = true) long fId,
+                               @RequestParam(name = "fcId",defaultValue = "0",required = true) long fcId)throws Exception {
+        RestResultModule module = new RestResultModule();
+        Date d = new Date();
+        //添加关系
+        FingerCaseRelation relation = new FingerCaseRelation();
+        relation.setFcId(fcId);
+        relation.setfId(fId);
+        relation.setCreateDate(d);
+        relation.setInd((long)1);  // 值1 是正在做
+        // 更新其他正在操作的
+        fingerJobsService.updateCaseRelationInd(fId);
+        fingerJobsService.saveFingerCaseRelation(relation);
+        fingerUserDao.jobsEditStatus(fId,3,d);
+
+        MyWebSocket webSocket = new MyWebSocket();
+        webSocket.sendInfo("ok");
+        return module;
+    }
+
+
+
+    /**
      * yes: 获取所有
      * @return
      */
@@ -122,9 +154,13 @@ public class FingerJobsController {
      */
     @ResponseBody
     @RequestMapping("/getJobsAllNo")
-    public List<FingerCase> getJobsAllNo(){
+    public RestResultModule getJobsAllNo(){
+        RestResultModule module = new RestResultModule();
         List<FingerCase> fingerCases = fingerCaseDao.getJobsAllNo();
-        return fingerCases;
+        List<FingerUser> fingerUsers = fingerUserDao.getAllStatus();
+        module.putData("fingerCases",fingerCases);
+        module.putData("fingerUsers",fingerUsers);
+        return module;
     }
 
     /**
@@ -164,24 +200,6 @@ public class FingerJobsController {
         module.putData("fingerUsers",fingerUsers);
         return module;
     }
-
-    /**
-     * fpComparisonaddLog : 按ID 添加log
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping("/fpComparisonaddLog")
-    public  RestResultModule fpComparisonaddLog(@RequestBody FingerUser fingerUser){
-        RestResultModule module = new RestResultModule();
-        List<FingerUser> fingerUsers = fingerUserDao.getAllfpComparison();
-        System.out.println(fingerUser.getId());
-
-
-        module.putData("fingerUsers",fingerUsers);
-        return module;
-    }
-
-
 
     /**
      *  test:修改状态
