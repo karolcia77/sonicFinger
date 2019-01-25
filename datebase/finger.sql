@@ -1,4 +1,4 @@
-CREATE DATABASE `sonicFinger`
+CREATE DATABASE `sonicFinger`;
 USE `sonicFinger`;
 
 -- 后台管理
@@ -23,7 +23,7 @@ CREATE TABLE `finger_status` (
   PRIMARY KEY (`fs_id`)
 )ENGINE=INNODB DEFAULT CHARSET=utf8;
 INSERT INTO finger_status (fs_title,fs_createdate,fs_updatedate)
-VALUES ('OFF',NOW(),NOW()),('等待',NOW(),NOW()),('派单',NOW(),NOW()),('跟单',NOW(),NOW())
+VALUES ('OFF',NOW(),NOW()),('等待',NOW(),NOW()),('派单',NOW(),NOW()),('跟单',NOW(),NOW());
 
 
 -- 用户表
@@ -61,7 +61,8 @@ CREATE TABLE `finger_case_relation` (
   `fcr_fc_id` INT(11) NULL COMMENT '单ID',
   `fcr_f_id` INT(11) NOT NULL COMMENT '人ID',
   `fcr_ind` INT(11) DEFAULT 0 COMMENT '单状态:0不做,1正在做',
-  `fcr_finger_ind` INT(11) DEFAULT 0 COMMENT '指纹登记状态:0未登记,1已登记',
+  `fcr_finger_startdate` DATETIME COMMENT '开始签到指纹时间',
+  `fcr_finger_enddate` DATETIME COMMENT '结束签到指纹时间',
   `fcr_createdate` DATETIME COMMENT '创建时间',
   PRIMARY KEY (`fcr_id`)
 )ENGINE=INNODB DEFAULT CHARSET=utf8;

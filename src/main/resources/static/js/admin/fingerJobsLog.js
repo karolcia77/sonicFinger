@@ -50,6 +50,45 @@ myapp.controller("fingerJobsYesController",["$scope","$http","$location",functio
     }
     into();
 
+
+    // 派单
+    $scope.fl = {}
+    $scope.alertSet = function(f){
+        $scope.fl = {}
+        $scope.fl = f;
+        if($scope.fl.status == 0){
+            $scope.fl.statusText = '未完成';
+        }else if($scope.fl.status == 1){
+            $scope.fl.statusText = '完成';
+        }else if($scope.fl.status == 2){
+            $scope.fl.statusText = '待做';
+        }
+        var date2=new Date($scope.fl.fcrStartdate);
+        var date1=new Date($scope.fl.fcCreateDate);
+        var date3=date2.getTime()-date1.getTime()  //时间差的毫秒数
+        if(date3 > 5*60*1000){
+            //计算出相差天数
+            var days=Math.floor(date3/(24*3600*1000))
+            //计算出小时数
+            var leave1=date3%(24*3600*1000)    //计算天数后剩余的毫秒数
+            var hours=Math.floor(leave1/(3600*1000))
+            //计算相差分钟数
+            var leave2=leave1%(3600*1000)        //计算小时数后剩余的毫秒数
+            var minutes=Math.floor(leave2/(60*1000))
+            //计算相差秒数
+            var leave3=leave2%(60*1000)      //计算分钟数后剩余的毫秒数
+            var seconds=Math.round(leave3/1000)
+            $scope.fl.fingerStartText = " 超时 "+days+"天 "+hours+"小时 "+minutes+" 分钟"+seconds+" 秒";
+        }else{
+            $scope.fl.fingerStartText = " 未 ";
+        }
+
+
+
+        $('#myModal').modal()
+        $('#myModal input[type="text"]').attr("readonly","readonly")
+    }
+
     // 退出
     $scope.goCancel = function(url){
         clicked(url); // 跳url

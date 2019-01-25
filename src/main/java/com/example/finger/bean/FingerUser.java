@@ -51,6 +51,12 @@ public class FingerUser {
 
     @Transient
     private String fc_no;  // fc_no
+    @Transient
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date fcrStartdate;
+    @Transient
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date fcrCreatedate;
 
     public FingerUser(){}
     public FingerUser(long id,String name,long status,Date updateDate){
@@ -65,12 +71,14 @@ public class FingerUser {
         this.fs_title = fs_title;
         this.jobsUpdateDate = jobsUpdateDate;
     }
-    public FingerUser(long id,String name,String fs_title,Date jobsUpdateDate,String no){
+    public FingerUser(long id,String name,String fs_title,Date jobsUpdateDate,String no,Date fcrStartdate,Date fcrCreatedate){
         this.id = id;
         this.name = name;
         this.fs_title = fs_title;
         this.jobsUpdateDate = jobsUpdateDate;
         this.fc_no = no;
+        this.fcrStartdate = fcrStartdate;
+        this.fcrCreatedate = fcrCreatedate;
     }
     public FingerUser(long id,String fingerTxt){
         this.id = id;
@@ -168,5 +176,21 @@ public class FingerUser {
 
     public void setUpdateDate(Date updateDate) {
         this.updateDate = updateDate;
+    }
+
+    public Date getFcrStartdate() {
+        return fcrStartdate;
+    }
+
+    public void setFcrStartdate(Date fcrStartdate) {
+        this.fcrStartdate = fcrStartdate;
+    }
+
+    public Date getFcrCreatedate() {
+        return fcrCreatedate;
+    }
+
+    public void setFcrCreatedate(Date fcrCreatedate) {
+        this.fcrCreatedate = fcrCreatedate;
     }
 }

@@ -70,16 +70,16 @@ public class FingerJobsService {
         // 获取当前跟单case,人ID,case状态0
         FingerCaseRelation relation = fingerCaseRelationDao.getStatusAndFid(fId,0);
         if(null != relation){
-            if(relation.getFingerInd() == 0){
+            if(null == relation.getFingerStartdate()){
                 // 登记
                 // 修改当前case指纹状态
-                fingerCaseRelationDao.editFingerInd(1,relation.getId());
+                fingerCaseRelationDao.editFingerStart(d,relation.getId());
                 // 修改人跟单状态:跟单
                 fingerUserDao.jobsEditStatus(relation.getfId(),4,d);
             }else{
                 // 结束登记
                 // 修改当前case指纹状态
-                fingerCaseRelationDao.editFingerInd(0,relation.getId());
+                fingerCaseRelationDao.editFingerEnd(d,relation.getId());
                 // 修改当前case,完成状态
                 fingerCaseDao.editStatus(relation.getFcId());
                 // 修改人跟单状态:等待

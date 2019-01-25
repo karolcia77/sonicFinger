@@ -43,7 +43,7 @@ public class FingerJobsController {
     private MyCaseRelationDao myCaseRelationDao;
 
     /**
-     * 获取所以用户
+     * 获取所以用户-前端显示
      * @return
      */
     @ResponseBody

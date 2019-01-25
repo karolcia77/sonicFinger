@@ -39,12 +39,13 @@ public interface FingerUserDao extends JpaRepository<FingerUser,Long> {
 
     /**
      * 以下是jobs
+     * 前端显示
      */
-    @Query("select new FingerUser(f.id,f.name,s.title,f.jobsUpdateDate,c.no) from FingerUser f " +
+    @Query("select new FingerUser(f.id,f.name,s.title,f.jobsUpdateDate,c.no,r.fingerStartdate,r.createDate) from FingerUser f " +
             " inner join FingerStatus s on f.fsId = s.id " +
-            " left join FingerCaseRelation r on r.fId = f.id and r.fingerInd = 1"+
+            " left join FingerCaseRelation r on r.fId = f.id and r.ind = 1"+
             " left join FingerCase c on c.id = r.fcId "+
-            " where f.status = 1 order by f.id")
+            " where f.status = 1 order by f.createdate")
     List<FingerUser> getFingerJobsAll();
 
 

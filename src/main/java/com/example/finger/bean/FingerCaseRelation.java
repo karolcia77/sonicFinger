@@ -27,8 +27,13 @@ public class FingerCaseRelation {
     @Column(name = "fcr_ind",columnDefinition="long default 0")
     private Long ind = (long)0;;  // 单状态:0不做,1正在做
 
-    @Column(name = "fcr_finger_ind",columnDefinition="long default 0")
-    private Long fingerInd = (long)0;;  // 指纹登记状态:0未登记,1已登记
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
+    @Column(name = "fcr_finger_startdate")
+    private Date fingerStartdate;
+
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
+    @Column(name = "fcr_finger_enddate")
+    private Date fingerEnddate;
 
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "fcr_createdate")
@@ -42,6 +47,22 @@ public class FingerCaseRelation {
     @Column(name = "f_name")
     private String f_name;  // f_name
 
+
+    public Date getFingerStartdate() {
+        return fingerStartdate;
+    }
+
+    public void setFingerStartdate(Date fingerStartdate) {
+        this.fingerStartdate = fingerStartdate;
+    }
+
+    public Date getFingerEnddate() {
+        return fingerEnddate;
+    }
+
+    public void setFingerEnddate(Date fingerEnddate) {
+        this.fingerEnddate = fingerEnddate;
+    }
 
     public String getF_name() {
         return f_name;
@@ -57,14 +78,6 @@ public class FingerCaseRelation {
 
     public void setFs_title(String fs_title) {
         this.fs_title = fs_title;
-    }
-
-    public Long getFingerInd() {
-        return fingerInd;
-    }
-
-    public void setFingerInd(Long fingerInd) {
-        this.fingerInd = fingerInd;
     }
 
     public Long getId() {

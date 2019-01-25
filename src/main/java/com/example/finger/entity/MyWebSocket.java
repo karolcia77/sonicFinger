@@ -33,7 +33,7 @@ public class MyWebSocket {
         addOnlineCount();           //在线数加1
         System.out.println("有新连接加入！当前在线人数为" + getOnlineCount());
         try {
-            sendMessage("这是txt");
+            sendMessage("更新成功");
             //sendMessage(CommonConstant.CURRENT_WANGING_NUMBER.toString());
         } catch (IOException e) {
             System.out.println("IO异常");
