@@ -4,6 +4,7 @@ import com.example.finger.bean.User;
 import com.example.finger.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,7 @@ import javax.servlet.http.HttpSession;
  * */
 @Controller
 @RequestMapping(value = "appJson/admin")
+@Component("AdminUserController")
 public class UserController {
     private  static Logger logger = LoggerFactory.getLogger(UserController.class);
 

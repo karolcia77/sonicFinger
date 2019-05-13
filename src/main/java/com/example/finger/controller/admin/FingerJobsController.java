@@ -6,7 +6,6 @@ import com.example.finger.entity.MyCaseRelation;
 import com.example.finger.entity.MyFingerLog;
 import com.example.finger.entity.MyWebSocket;
 import com.example.finger.service.FingerJobsService;
-import com.example.finger.service.FingerUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -18,7 +17,6 @@ import javax.annotation.Resource;
 import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /*
  * 后台-普通用户派单AdminFingerJobsController
@@ -49,7 +47,10 @@ public class FingerJobsController {
     @ResponseBody
     @RequestMapping("/getFingerJobsAll")
     public List<FingerUser> getFingerJobsAll(){
-        List<FingerUser> fingerUsers = fingerUserDao.getFingerJobsAll();
+        List<FingerUser> fingerUsers = null;
+        //fingerUsers = fingerUserDao.getFingerJobsAll();
+        fingerUsers = fingerUserDao.getAll();
+
         return fingerUsers;
     }
 

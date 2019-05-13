@@ -1,7 +1,5 @@
 package com.example.finger.dao;
 
-import com.example.finger.bean.FingerCase;
-import com.example.finger.bean.FingerCaseRelation;
 import com.example.finger.bean.FingerUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -41,12 +39,12 @@ public interface FingerUserDao extends JpaRepository<FingerUser,Long> {
      * 以下是jobs
      * 前端显示
      */
-    @Query("select new FingerUser(f.id,f.name,s.title,f.jobsUpdateDate,c.no,r.fingerStartdate,r.createDate) from FingerUser f " +
+/*    @Query("select new FingerUser(f.id,f.name,s.title,f.jobsUpdateDate,c.no,r.fingerStartdate,r.createDate) from FingerUser f " +
             " inner join FingerStatus s on f.fsId = s.id " +
             " left join FingerCaseRelation r on r.fId = f.id and r.ind = 1"+
             " left join FingerCase c on c.id = r.fcId "+
             " where f.status = 1 order by f.createdate")
-    List<FingerUser> getFingerJobsAll();
+    List<FingerUser> getFingerJobsAll();*/
 
 
     @Modifying

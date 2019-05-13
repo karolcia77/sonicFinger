@@ -1,9 +1,7 @@
 package com.example.finger.controller;
 
 import com.example.finger.bean.FingerUser;
-import com.example.finger.bean.RestResultModule;
 import com.example.finger.dao.FingerUserDao;
-import com.example.finger.service.FingerUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -11,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.Date;
 import java.util.List;
 
 /*
@@ -20,7 +17,7 @@ import java.util.List;
  * */
 @Controller
 @RequestMapping(value = "appJson")
-@Component("AdminFingerIndexController")
+@Component("FingerIndexController")
 public class FingerIndexController {
     private  static Logger logger = LoggerFactory.getLogger(FingerIndexController.class);
     @Resource
@@ -33,7 +30,9 @@ public class FingerIndexController {
     @ResponseBody
     @RequestMapping("/getFingerJobsAll")
     public List<FingerUser> getFingerJobsAll(){
-        List<FingerUser> fingerUsers = fingerUserDao.getFingerJobsAll();
+        List<FingerUser> fingerUsers = null;
+       // fingerUsers = fingerUserDao.getFingerJobsAll();
+        fingerUsers = fingerUserDao.getAll();
         return fingerUsers;
     }
 

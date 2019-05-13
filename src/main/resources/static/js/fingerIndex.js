@@ -7,7 +7,7 @@ myapp.controller("fingerIndexController",["$scope","$http","$location","$interva
     function into(){
         $http({
             method : 'post',
-            url : ctx + "appJson/admin/getFingerJobsAll",
+            url : ctx + "appJson/getFingerJobsAll",
         }).success(function (data) {
             if(data){
                 /* 成功*/
