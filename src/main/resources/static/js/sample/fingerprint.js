@@ -1238,7 +1238,7 @@ function clearFPImage(context, browserFlag)
 {
 	if(browserFlag == "verification")
 	{
-//		showImage(context, "${base}/base/images/base_fpVerify_clearImage.png", "clearForVerify");
+		//showImage(context, ctx + "/img/sample/base_fpVerify_clearImage.png", "clearForVerify");
 	}
 	else if(browserFlag == "register")
 	{
@@ -1716,8 +1716,9 @@ function fpVerification(title, downloadPrompt, isDriverInstall,context)
 		    var bg=document.getElementById("bg");
 		    comparisonDiv.style.display="block";//显示内容层，显示覆盖层
 		    comparisonDiv.style.left=parseInt((document.documentElement.scrollWidth-comparisonDiv.offsetWidth)/2)+document.documentElement.scrollLeft+"px";
-		    comparisonDiv.style.top=Math.abs(parseInt((document.documentElement.clientHeight-comparisonDiv.offsetHeight)/2))+document.documentElement.scrollTop+"px"; //为内容层设置位置
-		 	bg.style.display="block";
+		    //comparisonDiv.style.top=Math.abs(parseInt((document.documentElement.clientHeight-comparisonDiv.offsetHeight)/2))+document.documentElement.scrollTop+"px"; //为内容层设置位置
+            comparisonDiv.style.top=Math.abs(parseInt((document.documentElement.clientHeight)))+document.documentElement.scrollTop+"px"; //为内容层设置位置
+            //bg.style.display="block";
 		 	bg.style.height=document.documentElement.scrollHeight+"px"; 
 		 	isComp= true;
 		 	//开始采集

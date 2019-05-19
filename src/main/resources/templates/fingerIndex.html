@@ -9,23 +9,39 @@
     <link rel="icon" type="image/x-icon" th:href="@{/img/sion1.png}"/>
 
     <!-- css files -->
-    <link th:href="@{/css/assets/bootstrap.min.css}" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/fingerIndex.css}" type="text/css" media="all" /> <!-- Style-CSS -->
+
+    <!-- css files -->
+    <link th:href="@{/css/assets/bootstrap.min.css}" rel="stylesheet">
     <script th:src="@{/js/assets/jquery.js}"></script>
     <script th:src="@{/js/assets/angular.js}"></script>
     <script th:src="@{/js/fingerIndex.js}"></script>
     <script th:inline="javascript">
         var ctx = [[@{/}]];
     </script>
+    <!-- 指纹-->
+    <link rel="stylesheet" th:href="@{/css/sample/box.css}" type="text/css">
+    <script type="text/javascript" th:src="@{/js/sample/main.js}"></script>
+    <script type="text/javascript" th:src="@{/js/sample/fingerprint.js}"></script>
+    <script type="text/javascript" th:src="@{/js/sample/jquery.js}"></script>
+    <script type="text/javascript" th:src="@{/js/sample/baseMoth.js}"></script>
+    <script type="text/javascript" th:src="@{/js/sample/dhtmlxCommon.js}"></script>
+
     <!-- online-fonts -->
     <link href="http://fonts.googleapis.com/css?family=Oleo+Script:400,700&amp;subset=latin-ext" rel="stylesheet">
     <link href="http://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&amp;subset=cyrillic,cyrillic-ext,greek,greek-ext,latin-ext,vietnamese" rel="stylesheet">
     <!-- //online-fonts -->
 
+    <style>
+        #bg {
+            top: 2022px
+        }
+</style>
+
 </head>
 <body style="background: #478bca;" ng-app="myapp" ng-controller="fingerIndexController">
 
-<!-- Team -->
+<!-- IT Team Start-->
 <div class="w3ls-team" id="team" style="padding: 2em 0">
     <div class="container">
         <h3 class="title-agile">IT Team</h3>
@@ -50,7 +66,30 @@
         </div>
     </div>
 </div>
-<!-- //Team -->
+<!-- IT Team End -->
+
+<!-- 指纹 Start-->
+<div id="fingerContent">
+    <form id="fpVerifyForm" name="fpVerifyForm" ng-submit="editfpComparison()" style="display: none">
+        <input type="text" id="verifyModel" name="verifyModel" />
+        <input type="text" id="verifyTemplate" name="verifyTemplate" />
+        <input type="submit" id="submitFpVerifyForm"/>
+    </form>
+
+    <div id="comparison" style="display: inline"
+         onclick='fpVerification("指纹比对","请安装指纹驱动或启动服务",true,globalContext)'>点我开始实时获取指纹</div>
+    <div id="comparisonDiv" class="box" style="display: none;top: 351px;">
+        <h2>请正常录入</h2>
+        <div class="list">
+            <canvas id="canvasComp" width="430" height="320"></canvas>
+            <input type="button" value="关闭" onclick='location.reload()' />
+            <!-- onclick='closeCompa()'-->
+        </div>
+    </div>
+
+    <div id="bg" style="display: none;"></div>
+</div>
+<!-- 指纹 End-->
 
 </body>
 </html>

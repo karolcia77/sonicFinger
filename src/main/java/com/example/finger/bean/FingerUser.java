@@ -80,9 +80,10 @@ public class FingerUser {
         this.fcrStartdate = fcrStartdate;
         this.fcrCreatedate = fcrCreatedate;
     }
-    public FingerUser(long id,String fingerTxt){
+    public FingerUser(long id,String fingerTxt,String name){
         this.id = id;
         this.fingerTxt = fingerTxt;
+        this.name = name;
     }
     public FingerUser(String name,long id){
         this.name = name;

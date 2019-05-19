@@ -9,11 +9,7 @@ myapp.controller("fingerIndexController",["$scope","$http","$location","$interva
             method : 'post',
             url : ctx + "appJson/getFingerJobsAll",
         }).success(function (data) {
-            if(data){
-                /* 成功*/
-                $scope.fingerUsers = data;
-                console.log($scope.fingerUsers)
-            }
+            $scope.fingerUsers = data;
         })
     }
     into();
@@ -86,22 +82,12 @@ myapp.controller("fingerIndexController",["$scope","$http","$location","$interva
         websocket.close();
     }
 
+    /**
+     * 指纹
+     * @param url
+     */
+    $scope.user = {};
 
-    // 退出
-    $scope.goCancel = function(url){
-        clicked(url); // 跳url
-    }
-}]);
-
-// fingerSampleIndexController
-myapp.controller("fingerSampleIndexController",["$scope","$http","$location",function ($scope, $http, $location) {
-   // 启动指纹
-    myfunction();
-    var urlImg = ctx + '/img/sample/base_fpVerify.jpg';
-    $("#canvasComp").css("background","url("+urlImg+")  rgb(243, 245, 240)");
-    $scope.user = {}
-
-    $scope.users = {}
     // 提交比较
     $scope.editfpComparison = function(){
         $scope.user.fingerTxt = $("#verifyTemplate").val();
@@ -112,11 +98,39 @@ myapp.controller("fingerSampleIndexController",["$scope","$http","$location",fun
         }).success(function (data) {
             if(data){
                 /* 成功*/
-                //$scope.editfpComparison1(data.result.fingerUsers);
-              /*  //清空指纹图像
-                clearFPImage(globalContext, "verification");
-                //显示框--采集提示
-                collectTips(globalContext, "请水平按压手指验证", "verification");*/
+                showImage(globalContext, ctx + "/img/sample/base_fpVerify_clearImage.png", "clearForVerify");
+            }
+        })
+    }
+
+
+    // 退出
+    $scope.goCancel = function(url){
+        clicked(url); // 跳url
+    }
+}]);
+
+// fingerSampleIndexController
+myapp.controller("fingerSampleIndexController",["$scope","$http","$location",function ($scope, $http, $location) {
+   // 启动指纹
+    //myfunction();
+    var urlImg = ctx + '/img/sample/base_fpVerify.jpg';
+    $("#canvasComp").css("background","url("+urlImg+")  rgb(243, 245, 240)");
+    $scope.user = {}
+
+    $scope.users = {}
+
+    // 提交比较
+    $scope.editfpComparison = function(){
+        $scope.user.fingerTxt = $("#verifyTemplate").val();
+        $http({
+            method : 'post',
+            url : ctx + "appJson/admin/editfpComparison",
+            data : JSON.stringify($scope.user),
+        }).success(function (data) {
+            if(data){
+                /* 成功*/
+                showImage(globalContext, ctx + "/img/sample/base_fpVerify_clearImage.png", "clearForVerify");
             }
         })
     }

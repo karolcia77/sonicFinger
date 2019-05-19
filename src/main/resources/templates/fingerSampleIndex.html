@@ -26,6 +26,8 @@
 </head>
 <body ng-app="myapp" ng-controller="fingerSampleIndexController">
 
+<!-- 指纹-->
+<div id="fingerContent">
     <form id="fpVerifyForm" name="fpVerifyForm" ng-submit="editfpComparison()" style="display: none">
         <input type="text" id="verifyModel" name="verifyModel" />
         <input type="text" id="verifyTemplate" name="verifyTemplate" />
@@ -35,7 +37,7 @@
     <div id="comparison" style="display: inline"
          onclick='fpVerification("指纹比对","请安装指纹驱动或启动服务",true,globalContext)'>点我开始实时获取指纹</div>
     <div id="comparisonDiv" class="box" style="display: none">
-        <h2>指纹比对</h2>
+        <h2>请正常录入</h2>
         <div class="list">
             <canvas id="canvasComp" width="430" height="320"></canvas>
             <input type="button" value="关闭" onclick='location.reload()' />
@@ -44,28 +46,7 @@
     </div>
 
     <div id="bg" style="display: none;"></div>
-    <div id="box" class="box" style="display: none;">
-        <h2>指纹登记</h2>
-        <div class="list">
-            <canvas id="canvas" width="430" height="450"
-                    style="background: rgb(243, 245, 240)"></canvas>
-            <input type="hidden" id="whetherModify" name="whetherModify" alt=""
-                   value="111" />
+</div>
 
-            <div
-                    style="position: absolute; left: 310px; top: 325px; width: 70px; height: 28px;">
-                <button type="button" id="submitButtonId" name="makeSureName"
-                        onclick="submitEvent()" class="button-form">确定</button>
-                <!-- ${common_edit_ok}:确定 -->
-            </div>
-            <div
-                    style="position: absolute; left: 310px; top: 365px; width: 70px; height: 28px;">
-                <button class="button-form" type="button" id="closeButton"
-                        name="closeButton" onclick='cancelEvent("确认保存当前修改吗?", "指纹数:");'>
-                    取消</button>
-                <!-- ${common_edit_cancel}:取消 -->
-            </div>
-        </div>
-    </div>
 </body>
 </html>
