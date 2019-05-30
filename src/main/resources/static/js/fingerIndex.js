@@ -7,7 +7,7 @@ myapp.controller("fingerIndexController",["$scope","$http","$location","$interva
     function into(){
         $http({
             method : 'post',
-            url : ctx + "appJson/getFingerJobsAll",
+            url : ctx + "appJson/getFingerIndex",
         }).success(function (data) {
             $scope.fingerUsers = data;
         })
@@ -18,14 +18,12 @@ myapp.controller("fingerIndexController",["$scope","$http","$location","$interva
     var timer=$interval(function(){
         angular.forEach($scope.fingerUsers,function(hero,index,objs){
             var f = objs[index];
-            if(null != f.fcrCreatedate && null == f.fcrStartdate ){
+            if(f.fsId == 2 ){
                 var d = new Date().getTime();
-                var fd = new Date(f.fcrCreatedate).getTime();
-                if((d -fd) > 5*60*1000){
+                var fd = new Date(f.jobsUpdateDate).getTime();
+                if((d -fd) > 10*60*1000){
                     $scope.AnimationColor1(f.id);
                 }
-            }else if(null != f.fcrStartdate){
-                //$scope.AnimationColor2(f.id);
             }
         });
     },1000);  //间隔1秒定时执行

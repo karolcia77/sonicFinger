@@ -40,10 +40,8 @@ public class FingerJobsController {
     @Resource
     private MyCaseRelationDao myCaseRelationDao;
 
-    /**
-     * 获取所以用户-前端显示
-     * @return
-     */
+
+
     @ResponseBody
     @RequestMapping("/getFingerJobsAll")
     public List<FingerUser> getFingerJobsAll(){
@@ -185,6 +183,7 @@ public class FingerJobsController {
     public RestResultModule editfpComparison(@RequestBody FingerUser fingerUser) throws Exception{
         Date d = new Date();
         logger.info("------"+d+"指纹录入:"+fingerUser.getFingerTxt());
+        System.out.println("------"+d+"指纹录入:"+fingerUser.getFingerTxt());
         RestResultModule module = new RestResultModule();
         List<FingerUser> fingerUsers = fingerUserDao.getAllfpComparison();
         for (FingerUser u :fingerUsers) {
@@ -193,8 +192,8 @@ public class FingerJobsController {
                 String revNew = rev.replace("[","").replace("]","");
                 if (JavaToBiokey.NativeToProcess(fingerUser.getFingerTxt(), revNew)){
                     logger.info("------"+d+"匹配指纹成功:"+u.getId());
-                    //fingerJobsService.saveFingerLogFering(u.getId(),d);
                     System.out.println("匹配指纹成功:"+u.getId()+","+u.getName());
+                    fingerJobsService.saveFingerRecording(u.getId(),d);
                     break;
                 }
             }

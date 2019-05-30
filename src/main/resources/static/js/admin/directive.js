@@ -17,7 +17,7 @@ myapp.directive('leftDirective', function() {
         "                    <span class=\"icon-bar\"></span>\n" +
         "                    <span class=\"icon-bar\"></span>\n" +
         "                </button>\n" +
-        "                <a class=\"navbar-brand\" href=\"#\">Sonic派单后台</a>\n" +
+        "                <a class=\"navbar-brand\" href=\"#\">Sonic指纹后台</a>\n" +
         "            </div>\n" +
         "            <!-- /.navbar-header -->\n" +
         "            <ul class=\"nav navbar-top-links navbar-right\">\n" +
@@ -94,6 +94,9 @@ myapp.directive('leftDirective', function() {
         "                                </li>\n" +
         "                            </ul>\n" +
         "                            <!-- /.nav-second-level -->\n" +
+        "                        </li>\n" +
+        "                        <li>\n" +
+        "                            <a class=\"fingerRecodingPage\" href='javascript:void(0);' ng-click=\"goCancel('" + ctx + "appPage/admin/fingerRecoding')\"><i class=\"fa fa-user fa-fw\"></i> 打卡</a>\n" +
         "                        </li>\n" +
         "                    </ul>\n" +
         "                </div>\n" +

@@ -49,14 +49,14 @@
         <div class="row team-row">
             <div class="col-md-3 team-grids" ng-repeat="f in fingerUsers">
                 <div class="thumbnail team-w3agile" id="Animation{{f.id}}">
-                  <!--  <img th:src="@{/img/t1.jpg}" class="img-responsive" alt="">-->
-                    <div style="border: 5px solid #FCB22B;border-radius: 50%;padding: 16% 0%; width: 60%;margin: 0px auto;color: #478bca;">
+                  <!--  <img th:src="@{/img/t1.jpg}" class="img-responsive" alt="">FCB22B-->
+                    <div style="border: 5px solid #478bca;border-radius: 50%;padding: 16% 0%; width: 60%;margin: 0px auto;color: #478bca;">
                         <h2>{{f.name}}</h2>
                     </div>
                     <div class="caption">
-                       <!-- <h4>{{f.name}}</h4>-->
-                        <p style="font-size: 16px;">{{f.fs_title}}</p>
-                        <p ng-show="f.fc_no && f.fcrStartdate">单号: {{f.fc_no}}</p>
+                        <h4>{{f.fs_title}}</h4>
+                     <!--   <p style="font-size: 16px;">{{f.fs_title}}</p>
+                        <p ng-show="f.fc_no && f.fcrStartdate">单号: {{f.fc_no}}</p>-->
                     </div>
                     <div class="social-icons team-icons right-w3l fotw33">
                     </div>

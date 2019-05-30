@@ -77,3 +77,15 @@ CREATE TABLE `finger_log` (
   `fl_createdate` DATETIME COMMENT '创建时间',
   PRIMARY KEY (`fl_id`)
 )ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+
+-- 打卡
+DROP TABLE IF EXISTS `finger_recording`;
+CREATE TABLE `finger_recording` (
+  `fr_id` INT(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `fr_f_id` INT(11) NULL COMMENT '人ID',
+  `fr_createdate` DATETIME COMMENT '创建时间-指纹打卡',
+  `fr_updatedate` DATETIME COMMENT '结束时间-指纹打卡',
+  `fr_seconds` VARCHAR(200) NULL COMMENT '打卡秒数',
+  PRIMARY KEY (`fr_id`)
+)ENGINE=INNODB DEFAULT CHARSET=utf8;

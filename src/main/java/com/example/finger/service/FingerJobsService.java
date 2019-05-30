@@ -3,6 +3,7 @@ package com.example.finger.service;
 import com.example.finger.bean.FingerCase;
 import com.example.finger.bean.FingerCaseRelation;
 import com.example.finger.bean.FingerLog;
+import com.example.finger.bean.FingerRecording;
 import com.example.finger.dao.*;
 import com.example.finger.entity.MyWebSocket;
 import org.springframework.data.jpa.repository.Modifying;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
 import java.util.Date;
+import java.util.List;
 
 @Service("fingerJobsService")
 public class FingerJobsService {
@@ -26,6 +28,9 @@ public class FingerJobsService {
 
     @Resource
     FingerCaseRelationDao fingerCaseRelationDao;
+
+    @Resource
+    private FingerRecordingDao fingerRecordingDao;
 
     @Transactional
     public void jobsEditStatus(long fId,long fsId){
@@ -92,5 +97,50 @@ public class FingerJobsService {
         }
     }
 
+    /**
+     * 计算秒数
+     * @param sourcetime
+     * @param currentime
+     * @return
+     */
+    public static String getIntvalSecond(Date sourcetime ,Date currentime) {
+        long l = currentime.getTime() - sourcetime.getTime();
+        return String.valueOf((int) l / 1000);
+    }
+
+    /**
+     * 打卡
+     * @param fId 人ID
+     * @param d 时间
+     */
+    @Transactional
+    public void saveFingerRecording(long fId,Date d) throws Exception{
+        // 获取个人打卡结束时间为空的记录
+        List<FingerRecording> recordings = fingerRecordingDao.getAllByEnddateByNull(fId);
+        FingerRecording recording = null;
+        int fsId = 4;  // 跟单
+        if (recordings.size() > 0) {
+            // 有 -> 取第一个
+            recording = recordings.get(0);
+            recording.setEnddate(d);
+            // 获取秒数
+            recording.setSeconds(getIntvalSecond(recording.getCreateDate(),recording.getEnddate()));
+            fsId = 2; // 等待
+        }else{
+            // 否
+            recording = new FingerRecording();
+            recording.setFid(fId);
+            recording.setCreateDate(d);
+        }
+        // add
+        fingerRecordingDao.save(recording);
+        // 修改人跟单状态:跟单
+        fingerUserDao.jobsEditStatus(fId,fsId,d);
+        System.out.println("打卡成功");
+        // 通知前台啦
+        MyWebSocket webSocket = new MyWebSocket();
+        webSocket.sendInfo("ok");
+
+    }
 
 }

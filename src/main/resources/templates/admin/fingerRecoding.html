@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Sonic</title>
+    <link rel="icon" type="image/x-icon" th:href="@{/img/sion1.png}"/>
+    <!-- Bootstrap Core CSS -->
+    <link th:href="@{/css/assets/bootstrap.min.css}" rel="stylesheet">
+    <script th:src="@{/js/assets/jquery.js}"></script>
+    <script th:src="@{/js/assets/bootstrap.min.js}"></script>
+    <script th:src="@{/js/assets/jqPaginator.min.js}"></script>
+    <link th:href="@{/css/assets/myPage.css}" rel="stylesheet">
+    <script th:src="@{/js/layer/layer.js}"></script>
+    <script th:src="@{/js/laydate/laydate.js}"></script>
+    <script th:src="@{/js/assets/angular.js}"></script>
+    <script th:src="@{/js/admin/directive.js}"></script>
+    <script th:src="@{/js/admin/fingerRecoding.js}"></script>
+    <script th:src="@{/js/common.js}"></script>
+    <!--<base th:href="@{/appPage/admin/forms}">-->
+    <script th:inline="javascript">
+        var ctx = [[@{/}]];
+    </script>
+
+    <!-- MetisMenu CSS -->
+    <link th:href="@{/css/dist/metisMenu/metisMenu.min.css}" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link th:href="@{/css/dist/sb-admin-2.css}" rel="stylesheet">
+    <!-- Custom Fonts -->
+    <link th:href="@{/css/dist/font-awesome/css/font-awesome.min.css}" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+<body cz-shortcut-listen="true" ng-app="myapp" ng-controller="fingerRecodingController">
+<div id="wrapper">
+    <left-Directive></left-Directive>
+    <div id="page-wrapper">
+        <!-- /.row -->
+        <div class="row">
+            <!-- 内容-->
+            <div class="col-lg-12">
+                <div class="row" style="margin: 30px 0 20px;padding-bottom: 9px;border-bottom: 1px solid #eee;">
+                    <div class="col-lg-2">
+                        <span style="font-size: 36px;">打卡</span>
+                    </div>
+                </div>
+
+                <!-- 数据显示-->
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>名称</th>
+                            <th>创建时间</th>
+                            <th>结束时间</th>
+                            <th>用时秒数</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="f in myRs">
+                            <td><!--{{$index+1}}-->{{f.id}}</td>
+                            <td>{{f.fname}}</td>
+                            <td>{{f.createDate.substring(0,16)}}</td>
+                            <td>{{f.enddate.substring(0,16)}}</td>
+                            <td>{{f.seconds}}</td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+
+            <!-- 分页-->
+            <div style="text-align: right;">
+                <ul class="pagination" id="pagination"></ul>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Metis Menu Plugin JavaScript -->
+<script th:src="@{/js/dist/metisMenu/metisMenu.min.js}"></script>
+<!-- Custom Theme JavaScript -->
+<script th:src="@{/js/dist/sb-admin-2.js}"></script>
+
+</body>
+</html>

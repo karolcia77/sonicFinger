@@ -60,4 +60,9 @@ public class UrlController {
     public String fingerJobsLog(){
         return "admin/fingerJobsLog";
     }
+
+    @RequestMapping("/admin/fingerRecoding")
+    public String fingerRecoding(){
+        return "admin/fingerRecoding";
+    }
 }
