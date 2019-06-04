@@ -44,12 +44,54 @@ public class FingerRecodingController {
         Page<FingerRecording> fingerRecordings = null;
         fingerRecordings = fingerRecordingDao.fingByCreateDate(pageable);
 
+
+        for (FingerRecording recording:fingerRecordings.getContent()) {
+            if(null !=  recording.getSeconds()){
+                recording.setSeconds(secToTime(Integer.parseInt(recording.getSeconds())));
+            }
+            if(null !=  recording.getLastseconds()){
+                recording.setLastseconds(secToTime(Integer.parseInt(recording.getLastseconds())));
+            }
+        }
         module.putData("fingerRecordings",fingerRecordings.getContent());
         module.putData("PageCount",fingerRecordings.getTotalElements());
 
         return module;
     }
 
-
+    public static String secToTime(int time) {
+        String timeStr = null;
+        int hour = 0;
+        int minute = 0;
+        int second = 0;
+        if (time <= 0)
+            return "00:00";
+        else {
+            minute = time / 60;
+            if(time < 60){
+                second = time % 60;
+                timeStr =  unitFormat(second) + "秒";
+            }else if (minute < 60) {
+                second = time % 60;
+                timeStr = unitFormat(minute) + "分" + unitFormat(second) + "秒";
+            } else {
+                hour = minute / 60;
+                if (hour > 99)
+                    return "99:59:59";
+                minute = minute % 60;
+                second = time - hour * 3600 - minute * 60;
+                timeStr = unitFormat(hour) + "时" + unitFormat(minute) + "分" + unitFormat(second) + "秒";
+            }
+        }
+        return timeStr;
+    }
+    public static String unitFormat(int i) {
+        String retStr = null;
+        if (i >= 0 && i < 10)
+            retStr = "0" + Integer.toString(i);
+        else
+            retStr = "" + i;
+        return retStr;
+    }
 
 }

@@ -84,8 +84,13 @@ DROP TABLE IF EXISTS `finger_recording`;
 CREATE TABLE `finger_recording` (
   `fr_id` INT(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
   `fr_f_id` INT(11) NULL COMMENT '人ID',
+  `fr_last_time` DATETIME COMMENT '上次结束时间-指纹打卡',
+  `fr_last_seconds` VARCHAR(200) NULL COMMENT '等待时间-打卡秒数',
   `fr_createdate` DATETIME COMMENT '创建时间-指纹打卡',
-  `fr_updatedate` DATETIME COMMENT '结束时间-指纹打卡',
+  `fr_enddate` DATETIME COMMENT '结束时间-指纹打卡',
   `fr_seconds` VARCHAR(200) NULL COMMENT '打卡秒数',
   PRIMARY KEY (`fr_id`)
 )ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+
+

@@ -2,6 +2,7 @@
 $(function () {
     $(".fingerRecodingPage").addClass("active");
 })
+
 // admin/fingerRecodingController
 myapp.controller("fingerRecodingController",["$scope","$http","$location",function ($scope, $http, $location) {
     // 初始化
@@ -36,7 +37,6 @@ myapp.controller("fingerRecodingController",["$scope","$http","$location",functi
         })
     }
     into($scope.CurrentPage,$scope.PageSize);
-
 
 
     // 分页
@@ -99,6 +99,18 @@ myapp.controller("fingerRecodingController",["$scope","$http","$location",functi
     function closeWebSocket(){
         websocket.close();
     }
+
+    // laydate国际版
+    laydate.render({
+        elem: '#ladate1'
+    });
+    laydate.render({
+        elem: '#ladate2'
+    });
+    $scope.getLayDate = function(){
+        into($scope.CurrentPage,$scope.PageSize);
+    }
+
 
 
     // 退出

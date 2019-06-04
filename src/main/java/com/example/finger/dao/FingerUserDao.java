@@ -25,7 +25,7 @@ public interface FingerUserDao extends JpaRepository<FingerUser,Long> {
     @Query("from FingerUser f where f.status = 1")
     List<FingerUser> getAllStatusBy1();
 
-    @Query("select new FingerUser(f.id,f.fingerTxt,f.name) from FingerUser f where f.status = 1")
+    @Query("select new FingerUser(f.id,f.fingerTxt,f.jobsUpdateDate,f.name) from FingerUser f where f.status = 1")
     List<FingerUser> getAllfpComparison();
 
     @Query("select new FingerUser(f.id,f.name,f.status,f.updateDate) from FingerUser f where f.name like %:search% ")

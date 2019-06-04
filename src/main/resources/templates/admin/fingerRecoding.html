@@ -47,13 +47,31 @@
     <div id="page-wrapper">
         <!-- /.row -->
         <div class="row">
+
             <!-- 内容-->
             <div class="col-lg-12">
                 <div class="row" style="margin: 30px 0 20px;padding-bottom: 9px;border-bottom: 1px solid #eee;">
-                    <div class="col-lg-2">
+                    <div class="row col-lg-2">
                         <span style="font-size: 36px;">打卡</span>
                     </div>
                 </div>
+                <div class="row" style="margin-bottom: 20px;">
+                    <!-- start time -->
+                    <label style="margin-top: 5px;margin-left:50px;float: left;">创建时间: </label>
+                    <div class="col-md-2">
+                        <input type="text" class="form-control layui-input" id="ladate1" placeholder="yyyy-MM-dd"   AUTOCOMPLETE="off">
+                    </div>
+                    <!-- end time -->
+                    <label style="margin-top: 5px;margin-left:50px;float: left;">结束时间: </label>
+                    <div class="col-md-2">
+                        <input type="text" class="form-control layui-input" id="ladate2" placeholder="yyyy-MM-dd"   AUTOCOMPLETE="off">
+                    </div>
+                    <!-- Search -->
+                    <div class="col-md-2">
+                        <button class="btn btn-default" type="button" ng-click="getLayDate()">下载报表</button>
+                    </div>
+                </div>
+
 
                 <!-- 数据显示-->
                 <div class="table-responsive">
@@ -62,6 +80,8 @@
                         <tr>
                             <th>ID</th>
                             <th>名称</th>
+                            <th>上次结束时间</th>
+                            <th>上次等待秒数</th>
                             <th>创建时间</th>
                             <th>结束时间</th>
                             <th>用时秒数</th>
@@ -71,8 +91,10 @@
                         <tr ng-repeat="f in myRs">
                             <td><!--{{$index+1}}-->{{f.id}}</td>
                             <td>{{f.fname}}</td>
-                            <td>{{f.createDate.substring(0,16)}}</td>
-                            <td>{{f.enddate.substring(0,16)}}</td>
+                            <td>{{f.lasttime}}</td>
+                            <td>{{f.lastseconds}}</td>
+                            <td>{{f.createDate}}</td>
+                            <td>{{f.enddate}}</td>
                             <td>{{f.seconds}}</td>
                         </tr>
 

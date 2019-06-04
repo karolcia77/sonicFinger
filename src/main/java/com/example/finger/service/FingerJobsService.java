@@ -114,7 +114,7 @@ public class FingerJobsService {
      * @param d 时间
      */
     @Transactional
-    public void saveFingerRecording(long fId,Date d) throws Exception{
+    public void saveFingerRecording(long fId,Date d,Date josD) throws Exception{
         // 获取个人打卡结束时间为空的记录
         List<FingerRecording> recordings = fingerRecordingDao.getAllByEnddateByNull(fId);
         FingerRecording recording = null;
@@ -131,6 +131,9 @@ public class FingerJobsService {
             recording = new FingerRecording();
             recording.setFid(fId);
             recording.setCreateDate(d);
+            // 获取上次等待时间和秒数
+            recording.setLasttime(josD);
+            recording.setLastseconds(getIntvalSecond(josD,d));
         }
         // add
         fingerRecordingDao.save(recording);

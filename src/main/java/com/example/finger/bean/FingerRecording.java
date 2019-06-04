@@ -18,6 +18,13 @@ public class FingerRecording {
     @GeneratedValue(strategy = GenerationType.IDENTITY)  //自增
     private Long id;
 
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
+    @Column(name = "fr_last_time")
+    private Date lasttime;
+
+    @Column(name = "fr_last_seconds")
+    private String lastseconds;
+
     @Column(name = "fr_seconds")
     private String seconds;
 
@@ -39,13 +46,36 @@ public class FingerRecording {
 
 
     public FingerRecording(){}
-    public FingerRecording(long id,Date createDate,Date enddate,String seconds,String fname){
+    public FingerRecording(long id,Date lasttime,String lastseconds,Date createDate,Date enddate,String seconds,String fname){
         super();
         this.id = id;
         this.createDate = createDate;
         this.enddate = enddate;
         this.seconds = seconds;
         this.fname = fname;
+        this.lasttime = lasttime;
+        this.lastseconds = lastseconds;
+    }
+
+
+    public Date getLasttime() {
+        return lasttime;
+    }
+
+    public void setLasttime(Date lasttime) {
+        this.lasttime = lasttime;
+    }
+
+    public String getLastseconds() {
+        return lastseconds;
+    }
+
+    public void setLastseconds(String lastseconds) {
+        this.lastseconds = lastseconds;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
     }
 
     public String getFname() {

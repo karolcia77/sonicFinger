@@ -193,7 +193,7 @@ public class FingerJobsController {
                 if (JavaToBiokey.NativeToProcess(fingerUser.getFingerTxt(), revNew)){
                     logger.info("------"+d+"匹配指纹成功:"+u.getId());
                     System.out.println("匹配指纹成功:"+u.getId()+","+u.getName());
-                    fingerJobsService.saveFingerRecording(u.getId(),d);
+                    fingerJobsService.saveFingerRecording(u.getId(),d,u.getJobsUpdateDate());
                     break;
                 }
             }

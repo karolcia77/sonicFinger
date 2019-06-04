@@ -17,14 +17,14 @@ import java.util.List;
 @Component(value = "fingerRecordingDao")
 public interface FingerRecordingDao extends JpaRepository<FingerRecording,Long> {
 
-    @Query(value = "SELECT fr_id,fr_f_id,fr_createdate,fr_enddate,fr_seconds" +
-            " FROM finger_recording" +
+    @Query(value = "SELECT r.*" +
+            " FROM finger_recording r" +
             " WHERE fr_f_id = :fId" +
             " AND fr_enddate IS NULL" +
             " ORDER BY fr_createdate" ,nativeQuery = true)
     List<FingerRecording> getAllByEnddateByNull(@Param("fId")long fId);
 
-    @Query(value = "SELECT new FingerRecording(r.id,r.createDate,r.enddate,r.seconds,u.name) " +
+    @Query(value = "SELECT new FingerRecording(r.id,r.lasttime,r.lastseconds,r.createDate,r.enddate,r.seconds,u.name) " +
             " FROM FingerRecording r,FingerUser u" +
             " WHERE r.fid = u.id" +
             " ORDER BY r.createDate desc"
