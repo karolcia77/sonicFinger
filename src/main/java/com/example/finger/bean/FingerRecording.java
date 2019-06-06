@@ -31,7 +31,6 @@ public class FingerRecording {
     @Column(name = "fr_f_id",columnDefinition="long default 0")
     private Long fid = (long)0;
 
-
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "fr_createdate")
     private Date createDate;
@@ -42,7 +41,6 @@ public class FingerRecording {
 
     @Transient
     private String fname;  // 人名
-
 
 
     public FingerRecording(){}

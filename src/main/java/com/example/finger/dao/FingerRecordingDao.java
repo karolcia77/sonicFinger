@@ -33,4 +33,14 @@ public interface FingerRecordingDao extends JpaRepository<FingerRecording,Long> 
             " WHERE r.fid = u.id" +
             " ORDER BY r.createDate desc")
     Page<FingerRecording> fingByCreateDate(Pageable pageable);
+
+    @Query(value = "SELECT r.*"+
+            " FROM finger_recording r" +
+            " WHERE 1=1" +
+            " AND if(:startTime != '',r.fr_createdate > :startTime,1=1)"+
+            " AND if(:endTime != '',r.fr_createdate <= :endTime,1=1)"+
+            " ORDER BY r.fr_createdate desc"
+            , nativeQuery = true)
+    List<FingerRecording> getReportRecodings(@Param("startTime") String startTime,@Param("endTime") String endTime);
+
 }

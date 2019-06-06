@@ -107,8 +107,19 @@ myapp.controller("fingerRecodingController",["$scope","$http","$location",functi
     laydate.render({
         elem: '#ladate2'
     });
-    $scope.getLayDate = function(){
-        into($scope.CurrentPage,$scope.PageSize);
+
+    // 下载报表
+    $scope.getReportRecodings = function(){
+        var start = $("#ladate1").val();
+        var end = $("#ladate2").val();
+        if(end != ""){
+            end = end +" 23:59:59";
+        }
+        var dataMap = {
+            startTime : start,
+            endTime : end
+        }
+        clicked(ctx + "appJson/admin/getReportRecodings?startTime="+start+"&endTime="+end)
     }
 
 
