@@ -98,6 +98,9 @@ myapp.directive('leftDirective', function() {
         "                        <li>\n" +
         "                            <a class=\"fingerRecodingPage\" href='javascript:void(0);' ng-click=\"goCancel('" + ctx + "appPage/admin/fingerRecoding')\"><i class=\"fa fa-user fa-fw\"></i> 打卡</a>\n" +
         "                        </li>\n" +
+        "                        <li>\n" +
+        "                            <a class=\"fingerZohoPage\" href='javascript:void(0);' ng-click=\"goCancel('" + ctx + "appPage/admin/fingerZoho')\"><i class=\"fa fa-user-plus fa-fw\"></i> zoho对比</a>\n" +
+        "                        </li>\n" +
         "                    </ul>\n" +
         "                </div>\n" +
         "                <!-- /.sidebar-collapse -->\n" +

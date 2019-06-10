@@ -94,3 +94,27 @@ CREATE TABLE `finger_recording` (
 
 
 
+-- zoho_list
+DROP TABLE IF EXISTS `finger_zoho_list`;
+CREATE TABLE `finger_zoho_list` (
+  `fzl_id` INT(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `fzl_title` VARCHAR(200) NULL COMMENT '编号',
+  `fzl_createdate` DATETIME COMMENT '创建时间',
+  PRIMARY KEY (`fzl_id`)
+)ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+-- zoho
+DROP TABLE IF EXISTS `finger_zoho`;
+CREATE TABLE `finger_zoho` (
+  `zoho_id` INT(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `zoho_fzl_id` INT(11) NULL COMMENT 'zoho-ID',
+  `zoho_order` INT(11) NULL COMMENT '排序',
+  `zoho_number`  VARCHAR(200) NULL COMMENT 'zoho-编号',
+  `zoho_mail` VARCHAR(200) NULL COMMENT 'zoho-邮件',
+  `zoho_createdate` DATETIME COMMENT 'zoho-创建时间',
+  `zoho_enddate` DATETIME COMMENT 'zoho-关闭时间',
+  `zoho_subject` VARCHAR(500) NULL COMMENT 'zoho-主题',
+  `zoho_user` VARCHAR(200) NULL COMMENT 'zoho-邮件',
+  `zoho_status` VARCHAR(200) NULL COMMENT 'zoho-状态',
+  PRIMARY KEY (`zoho_id`)
+)ENGINE=INNODB DEFAULT CHARSET=utf8;

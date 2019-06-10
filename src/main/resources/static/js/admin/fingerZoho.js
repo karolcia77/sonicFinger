@@ -1,10 +1,10 @@
 // 初始化样式
 $(function () {
-    $(".fingerRecodingPage").addClass("active");
+    $(".fingerZohoPage").addClass("active");
 })
 
-// admin/fingerRecodingController
-myapp.controller("fingerRecodingController",["$scope","$http","$location",function ($scope, $http, $location) {
+// admin/fingerZohoController
+myapp.controller("fingerZohoController",["$scope","$http","$location",function ($scope, $http, $location) {
     // 初始化
     $scope.myRs = {};
     // 分页
@@ -72,40 +72,6 @@ myapp.controller("fingerRecodingController",["$scope","$http","$location",functi
         });
     }
 
-    var websocket = null;
-    //判断当前浏览器是否支持WebSocket
-    if('WebSocket' in window){
-        websocket = new WebSocket("ws://"+window.location.host+"/finger/websocket");
-    }
-    else{
-        console.log('Not support websocket')
-    }
-    //连接发生错误的回调方法
-    websocket.onerror = function(){
-        console.log('实时更新失败')
-    };
-    //连接成功建立的回调方法
-    websocket.onopen = function(event){
-        console.log('连接成功')
-    }
-    //接收到消息的回调方法
-    websocket.onmessage = function(event){
-        if("ok" == event.data ){
-            into($scope.CurrentPage,$scope.PageSize);
-        }
-    }
-    //连接关闭的回调方法
-    websocket.onclose = function(){
-        console.log('关闭实时更新')
-    }
-    //监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
-    window.onbeforeunload = function(){
-        websocket.close();
-    }
-    //关闭连接
-    function closeWebSocket(){
-        websocket.close();
-    }
 
     // laydate国际版
     laydate.render({
@@ -122,19 +88,6 @@ myapp.controller("fingerRecodingController",["$scope","$http","$location",functi
         into($scope.CurrentPage,$scope.PageSize);
     }
 
-    // 下载报表
-    $scope.getReportRecodings = function(){
-        var start = $("#ladate1").val();
-        var end = $("#ladate2").val();
-        if(end != ""){
-            end = end +" 23:59:59";
-        }
-        var dataMap = {
-            startTime : start,
-            endTime : end
-        }
-        clicked(ctx + "appJson/admin/getReportRecodings?startTime="+start+"&endTime="+end)
-    }
 
 
 

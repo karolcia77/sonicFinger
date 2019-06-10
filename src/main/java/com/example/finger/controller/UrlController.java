@@ -65,4 +65,9 @@ public class UrlController {
     public String fingerRecoding(){
         return "admin/fingerRecoding";
     }
+
+    @RequestMapping("/admin/fingerZoho")
+    public String fingerZoho(){
+        return "admin/fingerZoho";
+    }
 }

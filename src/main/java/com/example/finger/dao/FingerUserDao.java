@@ -54,4 +54,11 @@ public interface FingerUserDao extends JpaRepository<FingerUser,Long> {
     @Query("update FingerUser f set f.fsId = :fsId , f.jobsUpdateDate = :date where f.id = :fId")
     void jobsEditStatus(@Param("fId")long fId, @Param("fsId")long fsId, @Param("date") Date date);
 
+
+    /**
+     *
+     */
+    @Query(value = "SELECT f_name FROM finger_user WHERE f_id = :fId", nativeQuery = true)
+    String getUserNameById(@Param("fId")long fId);
+
 }

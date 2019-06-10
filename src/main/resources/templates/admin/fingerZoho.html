@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Sonic</title>
+    <link rel="icon" type="image/x-icon" th:href="@{/img/sion1.png}"/>
+    <!-- Bootstrap Core CSS -->
+    <link th:href="@{/css/assets/bootstrap.min.css}" rel="stylesheet">
+    <script th:src="@{/js/assets/jquery.js}"></script>
+    <script th:src="@{/js/assets/bootstrap.min.js}"></script>
+    <script th:src="@{/js/assets/jqPaginator.min.js}"></script>
+    <link th:href="@{/css/assets/myPage.css}" rel="stylesheet">
+    <script th:src="@{/js/layer/layer.js}"></script>
+    <script th:src="@{/js/laydate/laydate.js}"></script>
+    <script th:src="@{/js/assets/angular.js}"></script>
+    <script th:src="@{/js/admin/directive.js}"></script>
+    <script th:src="@{/js/admin/fingerZoho.js}"></script>
+    <script th:src="@{/js/common.js}"></script>
+    <!--<base th:href="@{/appPage/admin/forms}">-->
+    <script th:inline="javascript">
+        var ctx = [[@{/}]];
+    </script>
+
+    <!-- MetisMenu CSS -->
+    <link th:href="@{/css/dist/metisMenu/metisMenu.min.css}" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link th:href="@{/css/dist/sb-admin-2.css}" rel="stylesheet">
+    <!-- Custom Fonts -->
+    <link th:href="@{/css/dist/font-awesome/css/font-awesome.min.css}" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <style>
+        .tab-content .nav-tabs a{
+            padding: 10px 40px;
+        }
+
+    </style>
+
+</head>
+<body cz-shortcut-listen="true" ng-app="myapp" ng-controller="fingerZohoController">
+<div id="wrapper">
+    <left-Directive></left-Directive>
+    <div id="page-wrapper">
+        <!-- /.row -->
+        <div class="row">
+
+            <!-- 内容-->
+            <div class="col-lg-12">
+                <div class="row" style="margin: 30px 0 20px;padding-bottom: 9px;border-bottom: 1px solid #eee;">
+                    <div class="row col-lg-2">
+                        <span style="font-size: 36px;">zoho对比</span>
+                    </div>
+                </div>
+                <!-- 导航-->
+                <div class="row" style="margin-bottom: 20px;">
+                    <!-- 当前编号 -->
+                    <label style="margin-top: 5px;margin-left:50px;float: left;">预览编号: </label>
+                    <div class="col-md-2">
+                        <!-- Single button -->
+                        <select class="form-control">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </div>
+                    <!-- Search -->
+                    <label style="margin-top: 5px;margin-left:50px;float: left;">附件上传:</label>
+                    <div class="col-md-2">
+                        <!-- 按钮触发模态框 -->
+                        <button class="btn btn-default" type="button" data-toggle="modal" data-target="#myModal">上传</button>
+                        <!-- 模态框（Modal） -->
+                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                            &times;
+                                        </button>
+                                        <h4 class="modal-title" id="myModalLabel">
+                                            上传
+                                        </h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <!-- start time -->
+                                            <label style="margin-top: 5px;margin-left:50px;float: left;">编号: </label>
+                                            <div class="col-md-5">
+                                                <input type="text" class="form-control layui-input"  AUTOCOMPLETE="off">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div style="margin-left: 20px;margin-top: 20px;">
+                                                <div class="col-md-2">
+                                                <!--美化Input tpye="file", 文件上传标签 -->
+                                                <input type="button" onclick="path.click()" class="btn btn-default ng-binding" style="color: white;padding: 6px 30px;background-color: #71288E;" value="上传">
+                                                <input type="file" id="path" style="display:none" onchange="upfile.value=this.value">
+                                                </div>
+                                                    <div class="col-md-5">
+                                                    <input type="text" class="form-control file4-text" style="display:inline;"  size="20" name="upfile" id="upfile"  readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                        <button type="button" class="btn btn-primary">提交</button>
+                                    </div>
+                                </div><!-- /.modal-content -->
+                            </div><!-- /.modal -->
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="row" style="margin-bottom: 20px;">
+                    <!-- start time -->
+                    <label style="margin-top: 5px;margin-left:50px;float: left;">创建时间: </label>
+                    <div class="col-md-2">
+                        <input type="text" class="form-control layui-input" id="ladate1" placeholder="yyyy-MM-dd"   AUTOCOMPLETE="off">
+                    </div>
+                    <!-- end time -->
+                    <label style="margin-top: 5px;margin-left:50px;float: left;">结束时间: </label>
+                    <div class="col-md-2">
+                        <input type="text" class="form-control layui-input" id="ladate2" placeholder="yyyy-MM-dd"   AUTOCOMPLETE="off">
+                    </div>
+                    <!-- Search -->
+                    <div class="col-md-2" style="width: 8%;">
+                        <button class="btn btn-default" type="button" ng-click="getSearch()">搜索</button>
+                    </div>
+                </div>
+
+                <!-- 数据显示 tab-->
+                <div class="tab-content">
+                    <ul class="nav nav-tabs" style="margin-bottom: 10px;">
+                        <li class="active"><a href="#home" data-toggle="tab">列表</a></li>
+                        <li><a href="#ios" data-toggle="tab">图形</a></li>
+                        <li><a href="#jmeter" data-toggle="tab">分析</a></li>
+                    </ul>
+                    <!-- tab1-->
+                    <div class="tab-pane fade in active" id="home">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>名称</th>
+                                    <th>上次结束时间</th>
+                                    <th>上次等待分钟</th>
+                                    <th>创建时间</th>
+                                    <th>结束时间</th>
+                                    <th>用时</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="f in myRs">
+                                    <td><!--{{$index+1}}-->{{f.id}}</td>
+                                    <td>{{f.fname}}</td>
+                                    <td>{{f.lasttime}}</td>
+                                    <td>{{f.lastseconds}}</td>
+                                    <td>{{f.createDate}}</td>
+                                    <td>{{f.enddate}}</td>
+                                    <td>{{f.seconds}}</td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- 分页-->
+                        <div style="text-align: right;">
+                            <ul class="pagination" id="pagination"></ul>
+                        </div>
+
+                    </div>
+
+                    <!-- tab2-->
+                    <div class="tab-pane fade" id="ios">
+2
+                    </div>
+
+                    <!-- tab3-->
+                    <div class="tab-pane fade" id="jmeter">
+3
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Metis Menu Plugin JavaScript -->
+<script th:src="@{/js/dist/metisMenu/metisMenu.min.js}"></script>
+<!-- Custom Theme JavaScript -->
+<script th:src="@{/js/dist/sb-admin-2.js}"></script>
+
+</body>
+</html>

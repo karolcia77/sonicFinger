@@ -53,13 +53,15 @@ public class FingerRecodingController {
         RestResultModule module = new RestResultModule();
         int CurrentPage = Integer.parseInt(map.get("CurrentPage").toString());
         int PageSize = Integer.parseInt(map.get("PageSize").toString());
-//分页
+        String startTime = map.get("startTime").toString();
+        String endTime = map.get("endTime").toString();
+        //分页
         Pageable pageable = new PageRequest(CurrentPage-1,PageSize);
         Page<FingerRecording> fingerRecordings = null;
-        fingerRecordings = fingerRecordingDao.fingByCreateDate(pageable);
-
+        fingerRecordings = fingerRecordingDao.fingByCreateDatePage(startTime,endTime,pageable);
 
         for (FingerRecording recording:fingerRecordings.getContent()) {
+            recording.setFname(fingerUserDao.getUserNameById(recording.getFid()));
             if(null !=  recording.getSeconds()){
                 recording.setSeconds(secToTime(Integer.parseInt(recording.getSeconds())));
             }
@@ -93,7 +95,7 @@ public class FingerRecodingController {
             for (FingerRecording r:recodings) {
                 List rowData = new ArrayList();
                 rowData.add(r.getId());
-                rowData.add(r.getId());
+                rowData.add(fingerUserDao.getUserNameById(r.getFid()));
                 rowData.add(r.getLasttime());
                 if(null !=  r.getLastseconds()){
                     rowData.add(secToTime(Integer.parseInt(r.getLastseconds())));
