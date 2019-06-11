@@ -75,6 +75,12 @@ public class FingerRecodingController {
         return module;
     }
 
+    /**
+     * 报表
+     * @param response
+     * @param start
+     * @param end
+     */
     @RequestMapping("/getReportRecodings")
     public void getReportRecodings(HttpServletResponse response,
                                                @RequestParam(value="startTime",defaultValue = "") String start,

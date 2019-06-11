@@ -6,11 +6,24 @@ $(function () {
 // admin/fingerZohoController
 myapp.controller("fingerZohoController",["$scope","$http","$location",function ($scope, $http, $location) {
     // 初始化
-    $scope.myRs = {};
+    $scope.myZs = {};
     // 分页
     $scope.PageCount = 0; // 总数
     $scope.CurrentPage = 1; // 当前页
     $scope.PageSize = 10; // 显示页数
+    // zoholist-fzlid
+    $scope.fzlid = Number(getQueryString("fzlid"));
+
+    $http({
+        method : 'post',
+        url : ctx + "appJson/admin/zoho/getZohos"
+    }).success(function (data) {
+        if(data){
+            /* 成功*/
+            $scope.zohoLists = data;
+            $scope.zohoLists.unshift({'id':0,'title':'All'})
+        }
+    })
 
 
     function into(CurrentPage,PageSize){
@@ -23,16 +36,17 @@ myapp.controller("fingerZohoController",["$scope","$http","$location",function (
             CurrentPage : CurrentPage,
             PageSize : PageSize,
             startTime : start,
-            endTime : end
+            endTime : end,
+            fzlid :  $scope.fzlid
         }
         $http({
             method : 'post',
-            url : ctx + "appJson/admin/getFingerRecordingPage",
+            url : ctx + "appJson/admin/zoho/getZohoPage",
             data : JSON.stringify(dataMap)
         }).success(function (data) {
             if(data){
                 /* 成功*/
-                $scope.myRs = data.result.fingerRecordings;
+                $scope.myZs = data.result.zohos;
                 $scope.PageCount = data.result.PageCount;
                 if($scope.PageCount > 0){
                     $scope.Paginator($scope.PageCount,CurrentPage,PageSize);
@@ -84,12 +98,78 @@ myapp.controller("fingerZohoController",["$scope","$http","$location",function (
     // search
     $scope.getSearch = function(){
         // 初始化
-        $scope.myRs = {};
+        $scope.myZs = {};
         into($scope.CurrentPage,$scope.PageSize);
     }
 
+    // 上传
+    $scope.getUpload = function () {
+        var index = layer.load(0, {shade: false});
+        if(null == $scope.zoho_title || "" == $scope.zoho_title){
+            layer.alert('编号不可为空！！！', {
+                skin: 'layui-layer-lan'
+                ,closeBtn: 0
+                ,anim: 6 //动画类型
+            });
+            layer.close(index);
+            return;
+        }
+        var formData = new FormData();
+        var file = document.getElementById("path").files[0];
+        if(undefined != file && file.name){
+            var fileName = file.name.substring(file.name.lastIndexOf(".") + 1);
+            if(fileName =="xlsx" || fileName =="xls"){
+                formData.append('file', file);
+                formData.append('title', $scope.zoho_title);
+                $http({
+                    method:"post",
+                    url:ctx + "appJson/admin/zoho/upload",
+                    data:formData,
+                    headers : {
+                        'Content-Type' : undefined
+                    },
+                    transformRequest : angular.identity
+                }).then(function (response) {
+                    console.log(response)
+                    layer.close(index);
+                    if(response.data.code == 200){
+                        layer.alert('文件上传成功！！！', {
+                            skin: 'layui-layer-lan'
+                            ,closeBtn: 0
+                            ,anim: 4 //动画类型
+                        });
+                    }else{
+                        layer.alert('文件上传失败！！！', {
+                            skin: 'layui-layer-lan'
+                            ,closeBtn: 0
+                            ,anim: 6 //动画类型
+                        });
+                    }
+                });
+            }else{
+                layer.close(index);
+                layer.alert('文件格式不正确，请上传以.xlsx，.xls 为后缀名的文件。', {
+                    skin: 'layui-layer-lan'
+                    ,closeBtn: 0
+                    ,anim: 6 //动画类型
+                });
+                $("#path").val("");
+            }
+        }else{
+            layer.close(index);
+            layer.alert('文件格式不正确，请上传以.xlsx，.xls 为后缀名的文件。', {
+                skin: 'layui-layer-lan'
+                ,closeBtn: 0
+                ,anim: 6 //动画类型
+            });
+        }
+    }
 
 
+    // 点击下拉
+    $scope.clickSelect = function(){
+        clicked(ctx+"appPage/admin/fingerZoho?fzlid="+$scope.fzlid);
+    }
 
     // 退出
     $scope.goCancel = function(url){

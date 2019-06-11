@@ -94,9 +94,10 @@ myapp.controller("fingerIndexController",["$scope","$http","$location","$interva
             url : ctx + "appJson/admin/editfpComparison",
             data : JSON.stringify($scope.user),
         }).success(function (data) {
+            console.log(data);
             if(data){
                 /* 成功*/
-                showImage(globalContext, ctx + "/img/sample/base_fpVerify_clearImage.png", "clearForVerify");
+                //showImage(globalContext, ctx + "/img/sample/base_fpVerify_clearImage.png", "clearForVerify");
             }
         })
     }

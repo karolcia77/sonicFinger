@@ -67,13 +67,7 @@
                     <!-- 当前编号 -->
                     <label style="margin-top: 5px;margin-left:50px;float: left;">预览编号: </label>
                     <div class="col-md-2">
-                        <!-- Single button -->
-                        <select class="form-control">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
+                        <select class="form-control" ng-model="fzlid" ng-change="clickSelect()" ng-options="l.id  as l.title for l in zohoLists">
                         </select>
                     </div>
                     <!-- Search -->
@@ -98,14 +92,14 @@
                                             <!-- start time -->
                                             <label style="margin-top: 5px;margin-left:50px;float: left;">编号: </label>
                                             <div class="col-md-5">
-                                                <input type="text" class="form-control layui-input"  AUTOCOMPLETE="off">
+                                                <input type="text" class="form-control layui-input"  AUTOCOMPLETE="off" ng-model="zoho_title">
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div style="margin-left: 20px;margin-top: 20px;">
                                                 <div class="col-md-2">
                                                 <!--美化Input tpye="file", 文件上传标签 -->
-                                                <input type="button" onclick="path.click()" class="btn btn-default ng-binding" style="color: white;padding: 6px 30px;background-color: #71288E;" value="上传">
+                                                <input type="button" onclick="path.click()" class="btn btn-default ng-binding" style="color: white;padding: 6px 30px;background-color: #337ab7;" value="上传">
                                                 <input type="file" id="path" style="display:none" onchange="upfile.value=this.value">
                                                 </div>
                                                     <div class="col-md-5">
@@ -116,7 +110,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                        <button type="button" class="btn btn-primary">提交</button>
+                                        <button type="button" class="btn btn-primary" ng-click="getUpload()">提交</button>
                                     </div>
                                 </div><!-- /.modal-content -->
                             </div><!-- /.modal -->
@@ -154,27 +148,28 @@
                         <div class="table-responsive">
                             <table class="table table-striped">
                                 <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>名称</th>
-                                    <th>上次结束时间</th>
-                                    <th>上次等待分钟</th>
-                                    <th>创建时间</th>
-                                    <th>结束时间</th>
-                                    <th>用时</th>
-                                </tr>
+                                    <tr>
+                                        <th></th>
+                                        <th style="width: 8%;">工单编号</th>
+                                        <th>邮件</th>
+                                        <th>工单创建时间</th>
+                                        <th style="width: 32%;">主题</th>
+                                        <th>工单所有者</th>
+                                        <th>状态</th>
+                                        <th>工单关闭时间</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                <tr ng-repeat="f in myRs">
-                                    <td><!--{{$index+1}}-->{{f.id}}</td>
-                                    <td>{{f.fname}}</td>
-                                    <td>{{f.lasttime}}</td>
-                                    <td>{{f.lastseconds}}</td>
-                                    <td>{{f.createDate}}</td>
-                                    <td>{{f.enddate}}</td>
-                                    <td>{{f.seconds}}</td>
-                                </tr>
-
+                                    <tr ng-repeat="z in myZs">
+                                        <td>{{$index+1}}</td>
+                                        <td>{{z.number}}</td>
+                                        <td>{{z.mail}}</td>
+                                        <td>{{z.createDate}}</td>
+                                        <td>{{z.subject}}</td>
+                                        <td>{{z.user}}</td>
+                                        <td>{{z.status}}</td>
+                                        <td>{{z.enddate}}</td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
