@@ -71,10 +71,12 @@ public class FingerUserController {
     @RequestMapping(value = "/fingerUserUpdate",method= RequestMethod.POST)
     public RestResultModule faqThreeUpdate(@RequestBody FingerUser user){
         RestResultModule module = new RestResultModule();
+        Date d = new Date();
         if(null == user.getId()){
-            user.setCreateDate(new Date());
+            user.setCreateDate(d);
         }
-        user.setUpdateDate(new Date());
+        user.setUpdateDate(d);
+        user.setJobsUpdateDate(d);
         fingerUserDao.save(user);
         return module;
     }

@@ -44,6 +44,7 @@ myapp.controller("fingerZohoController",["$scope","$http","$location",function (
             url : ctx + "appJson/admin/zoho/getZohoPage",
             data : JSON.stringify(dataMap)
         }).success(function (data) {
+            console.log(data);
             if(data){
                 /* 成功*/
                 $scope.myZs = data.result.zohos;
@@ -54,6 +55,15 @@ myapp.controller("fingerZohoController",["$scope","$http","$location",function (
                     // 没有数据时不显示
                     $('#pagination').jqPaginator('destroy');
                 };
+                $scope.zohoAnalyses = data.result.zohoAnalyses;
+                $scope.zoho_maxDate = data.result.zoho_maxDate;
+                $scope.zoho_minDate = data.result.zoho_minDate;
+
+                $scope.fingerAnalyses = data.result.fingerAnalyses;
+                $scope.finger_maxDate = data.result.finger_maxDate;
+                $scope.finger_minDate = data.result.finger_minDate;
+
+
             }
         })
     }
@@ -133,10 +143,12 @@ myapp.controller("fingerZohoController",["$scope","$http","$location",function (
                     console.log(response)
                     layer.close(index);
                     if(response.data.code == 200){
-                        layer.alert('文件上传成功！！！', {
+                        layer.alert( '文件上传成功！！！', {
                             skin: 'layui-layer-lan'
                             ,closeBtn: 0
                             ,anim: 4 //动画类型
+                        },function () {
+                            clicked(ctx+"appPage/admin/fingerZoho?fzlid="+response.data.result.fzlid)
                         });
                     }else{
                         layer.alert('文件上传失败！！！', {

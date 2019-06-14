@@ -50,4 +50,7 @@ public interface FingerRecordingDao extends JpaRepository<FingerRecording,Long> 
             , nativeQuery = true)
     List<FingerRecording> getReportRecodings(@Param("startTime") String startTime,@Param("endTime") String endTime);
 
+
+
+
 }

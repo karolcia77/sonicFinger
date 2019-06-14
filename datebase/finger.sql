@@ -31,6 +31,7 @@ DROP TABLE IF EXISTS `finger_user`;
 CREATE TABLE `finger_user` (
   `f_id` INT(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
   `f_name` VARCHAR(100) NULL COMMENT '名称',
+  `f_zoho_name` VARCHAR(100) NULL COMMENT 'zoho-name',
   `f_finger` VARCHAR(100) NULL COMMENT '指纹号',
   `f_finger_txt` TEXT NULL COMMENT '指纹详细',
   `f_status` INT(11) DEFAULT '0' COMMENT '状态（1发布，0未发布）',

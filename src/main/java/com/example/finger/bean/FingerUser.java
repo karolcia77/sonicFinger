@@ -21,6 +21,9 @@ public class FingerUser {
     @Column(name = "f_name")
     private String name;
 
+    @Column(name = "f_zoho_name")
+    private String zohoname;
+
     @Column(name = "f_finger")
     private String finger;
 
@@ -91,6 +94,14 @@ public class FingerUser {
         this.id = id;
     }
 
+
+    public String getZohoname() {
+        return zohoname;
+    }
+
+    public void setZohoname(String zohoname) {
+        this.zohoname = zohoname;
+    }
 
     public String getFc_no() {
         return fc_no;

@@ -61,4 +61,7 @@ public interface FingerUserDao extends JpaRepository<FingerUser,Long> {
     @Query(value = "SELECT f_name FROM finger_user WHERE f_id = :fId", nativeQuery = true)
     String getUserNameById(@Param("fId")long fId);
 
+    @Query(value = "SELECT f_id FROM finger_user WHERE f_zoho_name LIKE %:name%", nativeQuery = true)
+    String getByZohonameID(@Param("name")String name);
+
 }

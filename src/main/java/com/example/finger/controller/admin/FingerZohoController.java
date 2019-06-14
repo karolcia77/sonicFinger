@@ -1,13 +1,11 @@
 package com.example.finger.controller.admin;
 
-import com.example.finger.bean.FingerRecording;
-import com.example.finger.bean.RestResultModule;
-import com.example.finger.bean.Zoho;
-import com.example.finger.bean.ZohoList;
+import com.example.finger.bean.*;
 import com.example.finger.dao.FingerRecordingDao;
 import com.example.finger.dao.FingerUserDao;
 import com.example.finger.dao.ZohoDao;
 import com.example.finger.dao.ZohoListDao;
+import com.example.finger.entity.ZohoAnalysis;
 import com.example.finger.service.ExcelUtilsService;
 import com.example.finger.util.ExcelUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -41,7 +39,11 @@ import java.util.*;
 @Component("AdminFingerZohoController")
 public class FingerZohoController {
     private  static Logger logger = LoggerFactory.getLogger(FingerZohoController.class);
+    @Resource
+    private FingerUserDao fingerUserDao;
 
+    @Resource
+    private FingerRecordingDao fingerRecordingDao;
 
     @Resource
     private ZohoListDao zohoListDao;
@@ -130,7 +132,7 @@ public class FingerZohoController {
      */
     @ResponseBody
     @RequestMapping("/zoho/getZohoPage")
-    public RestResultModule getFingerRecordingAll(@RequestBody Map<String,Object> map){
+    public RestResultModule getFingerRecordingAll(@RequestBody Map<String,Object> map) throws Exception{
         RestResultModule module = new RestResultModule();
         int CurrentPage = Integer.parseInt(map.get("CurrentPage").toString());
         int PageSize = Integer.parseInt(map.get("PageSize").toString());
@@ -138,15 +140,124 @@ public class FingerZohoController {
         String endTime = map.get("endTime").toString();
         long fzlid = Long.parseLong(map.get("fzlid").toString());
 
-        //分页
+        // 列表
         Pageable pageable = new PageRequest(CurrentPage-1,PageSize);
         Page<Zoho> zohos = null;
         zohos = zohoDao.fingZohoPage(fzlid,startTime,endTime,pageable);
 
+        List<ZohoAnalysis> zohoAnalyses = new ArrayList<>(); // zoho
+        List<ZohoAnalysis> fingerAnalyses = new ArrayList<>(); // 打卡
+        ZohoAnalysis analysis = null;
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        // 数据分析
+        List<String> userLists = zohoDao.getUserLists(fzlid,startTime,endTime);
+        // zoho
+        String zoho_maxDate = zohoDao.getMaxDate(fzlid,startTime,endTime); // 最大时间
+        String zoho_minDate = zohoDao.getMinDate(fzlid,startTime,endTime); // 最小时间
+        List<Zoho> zohoList = zohoDao.getzohoList(fzlid,startTime,endTime);
+        for (String s:userLists) {
+            analysis = new ZohoAnalysis();
+            analysis.setName(s);
+            analysis.setOpenCount(zohoDao.getStatusCount("Open",s,fzlid,startTime,endTime));
+            analysis.setClosedCount(zohoDao.getStatusCount("Closed",s,fzlid,startTime,endTime));
+            // 平均Closed时间
+            long diff = 0;
+            for (Zoho z:zohoList) {
+                if(z.getUser().equals(s) && z.getStatus().equals("Closed") && z.getEnddate() != null){
+                    diff += getDateDiff(z.getEnddate(),z.getCreateDate());
+                }
+            }
+            if(diff > 0){
+                analysis.setAve(getDateDiff1(diff / Long.parseLong(analysis.getClosedCount())));
+            }
+            zohoAnalyses.add(analysis);
+        }
+
+        // 打卡
+        long finger_maxDate = 0; // 最大时间
+        long finger_minDate = System.currentTimeMillis(); // 最小时间
+        String ids = "";
+        for (String s : userLists) {
+            analysis = new ZohoAnalysis();
+            String id = fingerUserDao.getByZohonameID(s);
+            if(null == id){
+                continue;
+            }
+            List<Object[]>  recodings = zohoDao.getRecodings(id,zoho_minDate,zoho_maxDate);
+            if(recodings.size() == 0){
+                continue; // 没有打卡人
+            }
+            // 平均Closed时间
+            long diff = 0;
+            for (int i = 0; i < recodings.size(); i++) {
+                Object[] lo = recodings.get(i);
+                analysis.setName(lo[0].toString());
+                Date date1 = simpleDateFormat.parse(lo[1].toString());
+                Date date2 = simpleDateFormat.parse(lo[2].toString());
+                diff += getDateDiff(date2,date1);
+                if(date1.getTime() > finger_maxDate){
+                    finger_maxDate = date1.getTime();
+                }
+                if(date1.getTime() < finger_minDate){
+                    finger_minDate = date1.getTime();
+                }
+
+            }
+            if(diff > 0){
+                analysis.setAve(getDateDiff1(diff / recodings.size()));
+            }
+            analysis.setClosedCount(String.valueOf(recodings.size()));
+            fingerAnalyses.add(analysis);
+        }
+
+
+
         module.putData("zohos",zohos.getContent());
         module.putData("PageCount",zohos.getTotalElements());
 
+        module.putData("zohoAnalyses",zohoAnalyses);
+        module.putData("zoho_maxDate",zoho_maxDate);
+        module.putData("zoho_minDate",zoho_minDate);
+
+        module.putData("fingerAnalyses",fingerAnalyses);
+        module.putData("finger_maxDate",simpleDateFormat.format(finger_maxDate));
+        module.putData("finger_minDate",simpleDateFormat.format(finger_minDate));
         return module;
     }
+
+
+
+    public static long getDateDiff(Date endDate, Date nowDate) {
+        long diff = endDate.getTime() - nowDate.getTime();
+        return diff;
+    }
+
+    public static String getDateDiff1(long diff) {
+        long nd = 1000 * 24 * 60 * 60;
+        long nh = 1000 * 60 * 60;
+        long nm = 1000 * 60;
+        // 计算差多少天
+        long day = diff / nd;
+// 计算差多少小时
+        long hour = diff % nd / nh;
+// 计算差多少分钟
+        long min = diff % nd % nh / nm;
+        return day + "天" + hour + "小时" + min + "分钟";
+    }
+
+
+
+    public static void main(String args[]) throws Exception{
+        Date endDate = new Date();
+        System.out.println( endDate.getTime());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date1 = simpleDateFormat.parse("2019-06-14 14:53:00");
+        Date date2 = simpleDateFormat.parse("2019-06-14 14:53:01");
+        System.out.println( date1.getTime());
+        System.out.println( date2.getTime());
+
+    }
+
 
 }

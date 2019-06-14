@@ -229,6 +229,9 @@ myapp.controller("fingerUserEditController",["$scope","$http","$location",functi
             params:{"fId": $scope.fId}
         }).success(function (data) {
             $scope.user = data.result.user;
+            $("#fingerId").val($scope.user.finger);
+            $("#fingerTemplate10").val($scope.user.fingerTxt);
+
             if($scope.user){
                 $scope.editType = "< Edit <" + $scope.user.name;
             }else{

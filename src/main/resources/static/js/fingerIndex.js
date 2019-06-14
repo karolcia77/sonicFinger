@@ -95,6 +95,7 @@ myapp.controller("fingerIndexController",["$scope","$http","$location","$interva
             data : JSON.stringify($scope.user),
         }).success(function (data) {
             console.log(data);
+            into();
             if(data){
                 /* 成功*/
                 //showImage(globalContext, ctx + "/img/sample/base_fpVerify_clearImage.png", "clearForVerify");
