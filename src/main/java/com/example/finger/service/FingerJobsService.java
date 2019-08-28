@@ -140,6 +140,13 @@ public class FingerJobsService {
         // 修改人跟单状态:跟单
         fingerUserDao.jobsEditStatus(fId,fsId,d);
         System.out.println("打卡成功");
+        // 日志
+        FingerLog log = new FingerLog();
+        log.setfId(fId);
+        log.setFsId((long)fsId);
+        log.setCreateDate(d);
+        fingerLogDao.save(log);
+
         // 通知前台啦
         MyWebSocket webSocket = new MyWebSocket();
         webSocket.sendInfo("ok");

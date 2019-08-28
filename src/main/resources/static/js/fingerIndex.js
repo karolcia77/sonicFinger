@@ -30,10 +30,12 @@ myapp.controller("fingerIndexController",["$scope","$http","$location","$interva
 
     // 红灯
     $scope.AnimationColor1 = function(id){
-        if($("#Animation"+id).css("background-color") == 'rgb(255, 0, 0)'){
-            $("#Animation"+id).css("background-color","");
+        if($("#Animation"+id+" .animation-div").css("border") == '5px solid rgb(255, 0, 0)'){
+            //$("#Animation"+id).css("background-color","");
+            $("#Animation"+id+" .animation-div").css("border","5px solid #478bca");
         }else{
-            $("#Animation"+id).css("background-color","red");
+           // $("#Animation"+id).css("background-color","red");
+            $("#Animation"+id+" .animation-div").css("border","5px solid red");
         }
     }
 
@@ -45,7 +47,11 @@ myapp.controller("fingerIndexController",["$scope","$http","$location","$interva
     var websocket = null;
     //判断当前浏览器是否支持WebSocket
     if('WebSocket' in window){
-        websocket = new WebSocket("ws://"+window.location.host+"/finger/websocket");
+        if("https:" == window.location.protocol){
+            websocket = new WebSocket("wss://"+window.location.host+"/finger/websocket");
+        }else{
+            websocket = new WebSocket("ws://"+window.location.host+"/finger/websocket");
+        }
     }
     else{
         console.log('Not support websocket')

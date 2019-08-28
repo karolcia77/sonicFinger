@@ -1,5 +1,5 @@
-CREATE DATABASE `sonicFinger`;
-USE `sonicFinger`;
+CREATE DATABASE `sonicfinger`;
+USE `sonicfinger`;
 
 -- 后台管理
 DROP TABLE IF EXISTS `user`;
@@ -72,9 +72,8 @@ CREATE TABLE `finger_case_relation` (
 DROP TABLE IF EXISTS `finger_log`;
 CREATE TABLE `finger_log` (
   `fl_id` INT(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
-  `fl_fc_id` INT(11) NULL COMMENT '单ID',
   `fl_f_id` INT(11) NOT NULL COMMENT '人ID',
-  `fl_fs_id` INT(11) DEFAULT 0 COMMENT '派单状态',
+  `fl_fs_id` INT(11) DEFAULT 0 COMMENT '状态',
   `fl_createdate` DATETIME COMMENT '创建时间',
   PRIMARY KEY (`fl_id`)
 )ENGINE=INNODB DEFAULT CHARSET=utf8;

@@ -1,8 +1,10 @@
 package com.example.finger.controller.admin;
 
+import com.example.finger.bean.FingerLog;
 import com.example.finger.bean.FingerUser;
 import com.example.finger.bean.RestResultModule;
 import com.example.finger.bean.User;
+import com.example.finger.dao.FingerLogDao;
 import com.example.finger.dao.FingerUserDao;
 import com.example.finger.entity.MyWebSocket;
 import com.example.finger.service.FingerUserService;
@@ -29,6 +31,9 @@ public class FingerUserController {
     private  static Logger logger = LoggerFactory.getLogger(FingerUserController.class);
     @Resource
     FingerUserDao fingerUserDao;
+
+    @Resource
+    FingerLogDao fingerLogDao;
 
     @Resource
     private FingerUserService fingerUserService;
@@ -78,6 +83,12 @@ public class FingerUserController {
         user.setUpdateDate(d);
         user.setJobsUpdateDate(d);
         fingerUserDao.save(user);
+        // 日志
+        FingerLog log = new FingerLog();
+        log.setfId(user.getId());
+        log.setFsId(user.getFsId());
+        log.setCreateDate(d);
+        fingerLogDao.save(log);
         return module;
     }
 

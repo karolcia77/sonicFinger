@@ -28,8 +28,8 @@
     <script type="text/javascript" th:src="@{/js/sample/dhtmlxCommon.js}"></script>
 
     <!-- online-fonts -->
-    <link href="http://fonts.googleapis.com/css?family=Oleo+Script:400,700&amp;subset=latin-ext" rel="stylesheet">
-    <link href="http://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&amp;subset=cyrillic,cyrillic-ext,greek,greek-ext,latin-ext,vietnamese" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Oleo+Script:400,700&amp;subset=latin-ext" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&amp;subset=cyrillic,cyrillic-ext,greek,greek-ext,latin-ext,vietnamese" rel="stylesheet">
     <!-- //online-fonts -->
 
     <style>
@@ -50,11 +50,18 @@
             <div class="col-md-3 team-grids" ng-repeat="f in fingerUsers">
                 <div class="thumbnail team-w3agile" id="Animation{{f.id}}">
                   <!--  <img th:src="@{/img/t1.jpg}" class="img-responsive" alt="">FCB22B-->
-                    <div style="border: 5px solid #478bca;border-radius: 50%;padding: 16% 0%; width: 60%;margin: 0px auto;color: #478bca;">
+                    <div class="animation-div" style="border: 5px solid #478bca;border-radius: 50%;padding: 16% 0%; width: 60%;margin: 0px auto;color: #478bca;">
                         <h2>{{f.name}}</h2>
                     </div>
                     <div class="caption">
-                        <h4>{{f.fs_title}}</h4>
+                        <element ng-if="f.fsId == 2">
+                            <h4 style="color: red">{{f.fs_title}}</h4>
+                        </element>
+                        <element ng-if="f.fsId != 2">
+                            <h4>{{f.fs_title}}</h4>
+                        </element>
+
+
                      <!--   <p style="font-size: 16px;">{{f.fs_title}}</p>
                         <p ng-show="f.fc_no && f.fcrStartdate">单号: {{f.fc_no}}</p>-->
                     </div>
@@ -69,7 +76,7 @@
 <!-- IT Team End -->
 
 <!-- 指纹 Start-->
-<div id="fingerContent">
+<div id="fingerContent" style="margin-top: 200px;">
     <form id="fpVerifyForm" name="fpVerifyForm" ng-submit="editfpComparison()" style="display: none">
         <input type="text" id="verifyModel" name="verifyModel" />
         <input type="text" id="verifyTemplate" name="verifyTemplate" />

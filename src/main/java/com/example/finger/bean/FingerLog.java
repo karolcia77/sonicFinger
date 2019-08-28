@@ -18,9 +18,6 @@ public class FingerLog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)  //自增
     private Long id;
 
-    @Column(name = "fl_fc_id")
-    private Long fcId;  // 单ID
-
     @Column(name = "fl_f_id")
     private Long fId;  // 人ID
 
@@ -54,14 +51,6 @@ public class FingerLog {
 
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
-    }
-
-    public Long getFcId() {
-        return fcId;
-    }
-
-    public void setFcId(Long fcId) {
-        this.fcId = fcId;
     }
 
     public Long getFsId() {
