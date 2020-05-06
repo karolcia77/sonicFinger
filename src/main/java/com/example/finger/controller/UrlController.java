@@ -16,6 +16,11 @@ public class UrlController {
         return "fingerIndex";
     }
 
+    @RequestMapping("/ok")
+    public String ok(){
+        return "ok";
+    }
+
     @RequestMapping("/fingerIndex")
     public String fingerIndex(){
         return "fingerIndex";

@@ -118,3 +118,61 @@ CREATE TABLE `finger_zoho` (
   `zoho_status` VARCHAR(200) NULL COMMENT 'zoho-状态',
   PRIMARY KEY (`zoho_id`)
 )ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+/**
+  * zoho-ticket
+  * 2019-12-12
+ */
+DROP TABLE IF EXISTS `zoho_Ticket`;
+CREATE TABLE `zoho_Ticket` (
+  `id` INT(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `ticketNumber` VARCHAR(200) NULL COMMENT 'ticket号码',
+  `email` VARCHAR(200) NULL COMMENT '发送人邮件',
+  `subject`  VARCHAR(500) NULL COMMENT '标题',
+  `status` VARCHAR(200) NULL COMMENT '状态',
+  `statusType` VARCHAR(200) COMMENT '状态类型',
+  `createdTime` DATETIME COMMENT '创建时间',
+  `webUrl` VARCHAR(500) NULL COMMENT 'webUrl',
+  `assigneeID` VARCHAR(200) NULL COMMENT '处理人ID',
+  `assigneeFirstName` VARCHAR(200) NULL COMMENT '处理人姓',
+  `assigneeLastName` VARCHAR(200) NULL COMMENT '处理人名字',
+  `assigneeEmail` VARCHAR(200) NULL COMMENT '处理人名字',
+  PRIMARY KEY (`id`)
+)ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+
+/**
+  * webhook_ticket
+  * 2020-04-02
+ */
+DROP TABLE IF EXISTS `webhook_ticket`;
+CREATE TABLE `webhook_ticket` (
+  `id` INT(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `prevState` TEXT NULL COMMENT '上一个状态',
+  `payload` TEXT NULL COMMENT '当前状态',
+  `eventTime` DATETIME COMMENT '事件时间',
+  `eventType` VARCHAR(200) NULL COMMENT 'ticket-来源类型',
+  `ticketNumber` VARCHAR(200) NULL COMMENT 'ticket号码',
+  `email` VARCHAR(200) NULL COMMENT '发送人邮件',
+  `subject`  VARCHAR(500) NULL COMMENT '标题',
+  `summary`  TEXT NULL COMMENT '摘要内容',
+  `status` VARCHAR(200) NULL COMMENT 'ticket-状态',
+  `cf_handled_by` VARCHAR(200) NULL COMMENT '处理人',
+  PRIMARY KEY (`id`)
+)ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+
+/**
+  * whatsapp_webhook
+  * 2020-04-24
+ */
+DROP TABLE IF EXISTS `whatsapp_webhook`;
+CREATE TABLE `whatsapp_webhook` (
+  `id` INT(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `json` TEXT NULL COMMENT '接收值',
+  `from_number` TEXT NULL COMMENT '当前状态',
+  `timestamp` DATETIME COMMENT '事件时间',
+  `message_text` TEXT NULL COMMENT 'ticket-来源类型',
+  PRIMARY KEY (`id`)
+)ENGINE=INNODB DEFAULT CHARSET=utf8;
+

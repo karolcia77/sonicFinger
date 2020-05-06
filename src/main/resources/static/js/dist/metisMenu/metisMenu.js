@@ -107,6 +107,7 @@
     };
 
     $.fn[pluginName] = function(options) {
+        debugger
         this.each(function () {
             var el = $(this);
             if (el.data(pluginName)) {

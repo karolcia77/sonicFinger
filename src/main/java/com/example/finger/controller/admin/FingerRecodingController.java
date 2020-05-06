@@ -22,10 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /*
  * 后台-普通用户FingerRecodingController
@@ -60,15 +57,33 @@ public class FingerRecodingController {
         Page<FingerRecording> fingerRecordings = null;
         fingerRecordings = fingerRecordingDao.fingByCreateDatePage(startTime,endTime,pageable);
 
-        for (FingerRecording recording:fingerRecordings.getContent()) {
+        //Iterator<FingerRecording> iter = fingerRecordings.getContent().iterator();
+        for (Iterator iter = fingerRecordings.getContent().iterator(); iter.hasNext();) {
+            FingerRecording recording = (FingerRecording)iter.next();
             recording.setFname(fingerUserDao.getUserNameById(recording.getFid()));
-            if(null !=  recording.getSeconds()){
-                recording.setSeconds(secToTime(Integer.parseInt(recording.getSeconds())));
+            if(null != recording.getEnddate()){
+                recording.setSeconds(getTimeDifference(recording.getEnddate(),recording.getCreateDate()));
+                long l = (recording.getEnddate().getTime() - recording.getCreateDate().getTime())/1000;
+                if( l <= 10){
+                    System.out.println(l);
+                    //iter.remove();
+                }
             }
-            if(null !=  recording.getLastseconds()){
-                recording.setLastseconds(secToTime(Integer.parseInt(recording.getLastseconds())));
-            }
+
+
         }
+
+    /*    for (FingerRecording recording:fingerRecordings.getContent()) {
+            recording.setFname(fingerUserDao.getUserNameById(recording.getFid()));
+         *//*   if(null !=  recording.getSeconds()){
+                recording.setSeconds(secToTime(Integer.parseInt(recording.getSeconds())));
+            }*//*
+           *//* if(null !=  recording.getLastseconds()){
+                recording.setLastseconds(secToTime(Integer.parseInt(recording.getLastseconds())));
+            }*//*
+           recording.setSeconds(getTimeDifference(recording.getEnddate(),recording.getCreateDate()));
+        }*/
+
         module.putData("fingerRecordings",fingerRecordings.getContent());
         module.putData("PageCount",fingerRecordings.getTotalElements());
 
@@ -94,7 +109,8 @@ public class FingerRecodingController {
             // 下载文件的默认名称
             response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode("IT-Recoding"+ ft.format(now) + ".xls", "utf-8"));
             OutputStream out = response.getOutputStream();
-            String[] headers = { "ID", "名称" ,"上次结束时间","上次等待分钟","创建时间","结束时间","用时"};
+           // String[] headers = { "ID", "名称" ,"上次结束时间","上次等待分钟","创建时间","结束时间","用时"};
+            String[] headers = { "ID", "名称" ,"创建时间","结束时间","用时"};
             ExcelUtils eeu = new ExcelUtils();
             HSSFWorkbook workbook = new HSSFWorkbook();
             List<List<Object>> data = new ArrayList<List<Object>>();
@@ -102,16 +118,16 @@ public class FingerRecodingController {
                 List rowData = new ArrayList();
                 rowData.add(r.getId());
                 rowData.add(fingerUserDao.getUserNameById(r.getFid()));
-                rowData.add(r.getLasttime());
-                if(null !=  r.getLastseconds()){
+               // rowData.add(r.getLasttime());
+              /*  if(null !=  r.getLastseconds()){
                     rowData.add(secToTime(Integer.parseInt(r.getLastseconds())));
                 }else{
                     rowData.add("");
-                }
+                }*/
                 rowData.add(r.getCreateDate());
                 rowData.add(r.getEnddate());
-                if(null !=  r.getSeconds()){
-                    rowData.add(secToTime(Integer.parseInt(r.getSeconds())));
+                if(null != r.getEnddate()){
+                    rowData.add(getTimeDifference(r.getEnddate(),r.getCreateDate()));
                 }else{
                     rowData.add("");
                 }
@@ -128,7 +144,35 @@ public class FingerRecodingController {
 
 
 
-
+    /***
+     * @comments 计算两个时间的时间差
+     */
+    public static String getTimeDifference(Date now,Date date) {
+        //格式日期格式，在此我用的是"2018-01-24 19:49:50"这种格式
+        //可以更改为自己使用的格式，例如：yyyy/MM/dd HH:mm:ss 。。。
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try{
+            long l=now.getTime()-date.getTime();       //获取时间差
+            long day=l/(24*60*60*1000);
+            long hour=(l/(60*60*1000)-day*24);
+            long min=((l/(60*1000))-day*24*60-hour*60);
+            long s=(l/1000-day*24*60*60-hour*60*60-min*60);
+            String str = "";
+            if(day > 0 ){
+                str = day+"天"+hour+"小时"+min+"分"+s+"秒";
+            }else if(hour > 0 ){
+                str = hour+"小时"+min+"分"+s+"秒";
+            }else if(min > 0 ){
+                str = min+"分"+s+"秒";
+            }else if(s > 0 ){
+                str = s+"秒";
+            }
+            return str;
+        }catch(Exception e){
+            e.printStackTrace();
+            return "";
+        }
+    }
 
 
     public static String secToTime(int time) {
